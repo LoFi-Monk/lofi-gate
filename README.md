@@ -22,9 +22,7 @@ AI coding agents in standard environments fail in two predictable ways:
 1.  **Context Bloat**: Drowning in verbose logs, wasting tokens on irrelevant details.
 2.  **Cheating**: Modifying test files to force a pass instead of fixing the actual bug.
 
-**The Solution**: AiVerify enforces a single, non-bypassable verification entry point that sanitizes output and locks down the quality process.
-
-**The Solution**: AiVerify standardizes the entry point to enforce a strict, project-owned verification workflow that the agent cannot circumvent.
+**The Solution**: AiVerify creates a single, non-bypassable verification entry point that sanitizes output and enforces a project-owned quality workflow.
 
 ## 🚀 Core Features
 
