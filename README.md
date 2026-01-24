@@ -125,16 +125,31 @@ Add to `package.json`:
 
 ## The Full Suite Strategy
 
-AiVerify is designed to be Part 1 of an **Inescapable Quality Harness** for AI Agents. To replicate our "Spotify-grade" results, we recommend this 3-Layer approach:
+AiVerify is designed to be Part 1 of an **Inescapable Quality Harness** for AI Agents. To replicate our "Spotify-grade" results, we recommend this 4-Layer approach:
+
+### Layer 0: Project Configuration ( The Foundation)
+
+Before enforcing gates, you must map the territory for the Agent.
+**Action**: Update your `package.json` to define the standard and the "Speed Lane".
+
+```json
+"scripts": {
+  "verify": "python aiverify.py --parallel",  // The Main Gate
+  "test": "npm run verify",                   // Redirect standard test
+  "test:agent": "jest --onlyChanged"          // ⚡ THE SPEED LANE
+}
+```
+
+- **Why `test:agent`?**: This is crucial. It tells the Agent: _"Only test what I changed."_ It prevents the agent from reading 500 irrelevant files, saving massive amounts of context and tokens.
 
 ### Layer 1: Local Gates (AiVerify)
 
-- **Goal**: Context Preservation & Speed.
-- **Tool**: `aiverify.py` (Local Trust Gate).
+- **Goal**: Enforcement.
+- **Tool**: `aiverify.py` + Husky.
 - **Setup**:
   1. Install Husky: `npm install husky --save-dev && npx husky init`
   2. Add Pre-Push Hook: `echo "npm run verify" > .husky/pre-push`
-     _Result: The Agent cannot push "noisy" or broken code._
+     _Result: The Agent cannot push "noisy" or broken code to the server._
 
 ### Layer 2: Repo Rules (The Hard Block)
 
@@ -152,6 +167,14 @@ AiVerify is designed to be Part 1 of an **Inescapable Quality Harness** for AI A
 - **Tool**: GitHub Actions / GitLab CI.
 - **Configuration**: Run full standard tests (Jest/Pytest) with verbose logging.
 - **Note**: Keep AiVerify **local**. Use the verbose CI logs only for deep debugging when things go wrong.
+
+### 🌍 Beyond Node.js: Python & Rust
+
+AiVerify isn't just for JavaScript. It's a universal adapter for AI-friendly verification.
+
+- **Python**: Automatically detects `pytest` or `requirements.txt`.
+- **Rust (Blazing Fast)**: Wraps `cargo test` and `cargo check`.
+  - _Benchmark_: Local verification with AiVerify took **<30 seconds**, compared to **5+ minutes** for equivalent cloud CI runs.
 
 ---
 
