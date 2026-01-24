@@ -39,6 +39,8 @@ The script buffers output to prevent token overflow and context exhaustion.
 
 ## 🛡️ Advanced Gates ("The Iron Man Suite")
 
+![Iron Man Suite Gates](gates.png)
+
 AiVerify blindly enforces these project rules if conditions are met:
 
 - **Gate 1: Security Scan**: If `package.json` exists, it runs `npm audit --audit-level=high`. Blocks on Critical/High vulnerabilities.
