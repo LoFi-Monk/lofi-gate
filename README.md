@@ -8,29 +8,46 @@
 
 AiVerify is a high-performance verification proxy designed for the era of agentic software development. It acts as an intelligent "Inner Loop" verifier, ensuring your AI pair (Claude, GPT, Antigravity) receives the pure **Signal** it needs to ship, without the toxic **Noise** of verbose terminal logs.
 
-## The Problem: Context Starvation
+## 🧠 The Philosophy
 
-Traditional test suites (Jest, Pytest, Go Test) are built for humans with high visual bandwidth. They dump thousands of lines of "Success" logs.
-For an AI Agent, this is code-crushing bloat:
+Standard Coding Agents fail in two main ways:
 
-- **Hallucinations**: Verbose logs push original source code out of the context window.
-- **Cost**: You pay for every line of "Noise" being sent to the LLM.
-- **Speed**: Sequential test runs create unacceptably long feedback loops for agents.
+1.  **Context Bloat**: Agents often read _every_ test file just to understand how to run them. This wastes tokens and distracts the model with irrelevant code.
+2.  **Cheating**: When faced with a failure, Agents often modify the test itself to force a pass, rather than fixing the bug.
 
-## The Solution: Spotify-Inspired Verification Loops
+**The Solution**: AiVerify standardizes the entry point to enforce a strict, project-owned verification workflow that the agent cannot circumvent.
 
-Inspired by Spotify's research into [Predictable Agentic Results through Strong Feedback Loops](https://engineering.atspotify.com/2025/12/feedback-loops-background-coding-agents-part-3), AiVerify provides:
+## 🚀 Core Features
 
-1. **Silent Success**: If your tests/lint pass, AiVerify returns a concise "✅ Verified" signal.
-2. **Smart Truncation**: If failure occurs, it captures and displays only the most relevant error lines (the last ~100 lines), preserving precious context space.
-3. **Parallel Execution**: Automatically runs independent checks (Lint, Audit, and Tests) in parallel to speed up the agent's feedback loop.
-4. **Strict TDD Gate**: Optional enforcement that ensures every new code file has a corresponding test file before allowing a "Pass" status.
+### 1. Eliminating Context Bloat (The "Speed Lane")
+
+Agents run `npm run test:agent` (if configured) to execute tools like `jest --onlyChanged`.
+
+- **Result**: The Agent verifies code in seconds, scanning only relevant files.
+
+### 2. Smart Truncation
+
+The script buffers output to prevent token overflow and context exhaustion.
+
+- **Success**: Prints `✅ Verified` (hides 1000s of lines of logs).
+- **Failure**: Prints only the last 100 lines of the error.
+
+### 3. Parallel Execution & Auto-Retry
+
+- **Parallelism**: Automatically runs Lint, Security, and Tests concurrently for instant feedback.
+- **Flake Protection**: Automatically retries a failed test command once before reporting it to the agent, reducing friction from flaky tests.
+
+## 🛡️ Advanced Gates ("The Iron Man Suite")
+
+AiVerify blindly enforces these project rules if conditions are met:
+
+- **Gate 1: Security Scan**: If `package.json` exists, it runs `npm audit --audit-level=high`. Blocks on Critical/High vulnerabilities.
+- **Gate 2: Strict TDD Enforcer**: Checks `git status` for new implementation files. Fails with "STRICT TDD VIOLATION" if code is created without a corresponding test file.
+- **Gate 3: Coverage Check**: If a `coverage` script exists, it ensures thresholds are met before allowing a passage.
 
 ## Visual Proof: Signal vs. Noise
 
 ### ❌ The Old Way (Toxic Noise)
-
-When your agent runs tests, it gets back a wall of text that pushes your code out of context.
 
 ```text
 $ npm test
@@ -41,20 +58,12 @@ $ npm test
  PASS  test/utils.test.js (0.8s)
  PASS  test/api.test.js (2.1s)
  ... [500 lines of passing details] ...
------------------------|---------|----------|---------|---------|-------------------
-File                   | % Stmts | % Branch | % Locs  | % Lines | Uncovered Line #s
------------------------|---------|----------|---------|---------|-------------------
-All files              |     100 |      100 |     100 |     100 |
------------------------|---------|----------|---------|---------|-------------------
 Test Suites: 15 passed, 15 total
 Tests:       84 passed, 84 total
-Snapshots:   0 total
 Time:        4.5s
 ```
 
 ### ✅ The AiVerify Way (Pure Signal)
-
-AiVerify strips the noise. Your agent stays focused on the logic.
 
 ```text
 $ python aiverify.py --parallel
@@ -85,13 +94,28 @@ python aiverify.py --parallel
 - `--parallel`: Run independent checks (Lint, Security, Test) concurrently.
 - `--serial`: Run checks one by one (default, handles fail-fast cases).
 
-## Integration with Node.js
+## ⚙️ Configuration
 
-Add it to your `package.json`:
+AiVerify respects your standard tool configurations.
+
+**To set a Coverage Threshold (Jest example):**
+
+```json
+"jest": {
+  "coverageThreshold": { "global": { "lines": 90 } }
+}
+```
+
+**Standard Node Integration:**
+Add to `package.json`:
 
 ```json
 "scripts": {
-  "verify": "python aiverify.py --parallel"
+  "test": "npm run verify",
+  "verify": "python scripts/aiverify.py --parallel",
+  "test:agent": "jest --onlyChanged",
+  "lint": "eslint .",
+  "coverage": "jest --coverage"
 }
 ```
 
@@ -99,44 +123,24 @@ Add it to your `package.json`:
 
 ## Detailed Setup & Trust Gates
 
-AiVerify is designed to be your project's **Local Trust Gate**. It ensures that your AI agent never commits or pushes code that hasn't been strictly verified.
-
 ### 1. The Node.js "Professional" setup
 
-For Node projects, don't just run it manually. Make it the default gate using **Husky**:
+For Node projects, make it the default gate using **Husky**:
 
-1. **Install Husky**: `npm install husky --save-dev && npx husky init`
-2. **Add the Hook**: Update your `.husky/pre-push` or `.husky/pre-commit` file:
+1. **Install**: `npm install husky --save-dev && npx husky init`
+2. **Add Hook**: Update `.husky/pre-push`:
    ```bash
-   # .husky/pre-push
    npm run verify
    ```
-   Now, the AI agent _cannot_ push code unless the "Pure Signal" is achieved.
 
-### 2. Implementation for Python
+### 2. Cross-Language Support
 
-If you are working in a Python environment, `aiverify.py` will autodetect `pytest` or `requirements.txt`.
+- **Python**: Autodetects `pytest` or `requirements.txt`.
+- **Rust (Blazing Fast)**: Wraps `cargo test` and `cargo check`. (Local speed <30s vs Cloud CI 5m).
 
-```bash
-# Set up a alias or script
-python aiverify.py --parallel
-```
+### 3. A Note on CI (GitHub Actions)
 
-### 3. Implementation for Rust (Blazing Fast)
-
-AiVerify loves Rust. It wraps `cargo test` and `cargo check` to provide near-instant feedback.
-Ensure your `aiverify.py` is in the root, and run:
-
-```bash
-python aiverify.py --parallel
-```
-
-_Note: In our tests, local verification with AiVerify took <30 seconds, compared to 5+ minutes for equivalent cloud CI runs._
-
-### 4. A Note on CI (GitHub Actions)
-
-**Keep AiVerify local.**
-While you _could_ run AiVerify in GitHub Actions, it is optimized for **Human-AI Pair Speed**. In CI, you usually want the verbose logs for post-mortem debugging. Keep AiVerify in your local dev loop to maintain the "Fast Internal Feedback Loop" described in the Spotify research.
+**Keep AiVerify local.** It is optimized for **Human-AI Pair Speed**. In CI, use standard verbose logs for post-mortem debugging.
 
 ---
 
