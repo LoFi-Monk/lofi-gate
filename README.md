@@ -6,14 +6,23 @@
 
 > "Strong verification loops guide the agent toward the desired result... abstracting away much of the noise that would otherwise consume the agent’s precious context window." — _Spotify Engineering_
 
-AiVerify is a high-performance verification proxy designed for the era of agentic software development. It acts as an intelligent "Inner Loop" verifier, ensuring your AI pair (Claude, GPT, Antigravity) receives the pure **Signal** it needs to ship, without the toxic **Noise** of verbose terminal logs.
+AiVerify is a high-performance verification proxy designed for the era of agentic software development. It acts as an intelligent "Inner Loop" verifier, ensuring your AI pair (Claude, GPT, Antigravity) receives the pure **Signal** it needs to ship.
+
+## Who is this for?
+
+- You use AI coding agents (Claude, Cursor, Windsurf, etc.)
+- Your test logs are huge, noisy, and expensive.
+- You want to prevent agents from modifying tests to "cheat."
+- You care about deterministic, unskippable quality gates.
 
 ## 🧠 The Philosophy
 
-Standard Coding Agents fail in two main ways:
+AI coding agents in standard environments fail in two predictable ways:
 
-1.  **Context Bloat**: Agents often read _every_ test file just to understand how to run them. This wastes tokens and distracts the model with irrelevant code.
-2.  **Cheating**: When faced with a failure, Agents often modify the test itself to force a pass, rather than fixing the bug.
+1.  **Context Bloat**: Drowning in verbose logs, wasting tokens on irrelevant details.
+2.  **Cheating**: Modifying test files to force a pass instead of fixing the actual bug.
+
+**The Solution**: AiVerify enforces a single, non-bypassable verification entry point that sanitizes output and locks down the quality process.
 
 **The Solution**: AiVerify standardizes the entry point to enforce a strict, project-owned verification workflow that the agent cannot circumvent.
 
@@ -41,10 +50,10 @@ The script buffers output to prevent token overflow and context exhaustion.
 
 ![Iron Man Suite Gates](gates.png)
 
-AiVerify blindly enforces these project rules if conditions are met:
+AiVerify **deterministically** enforces these project rules without agent intervention:
 
 - **Gate 1: Security Scan**: If `package.json` exists, it runs `npm audit --audit-level=high`. Blocks on Critical/High vulnerabilities.
-- **Gate 2: Strict TDD Enforcer**: Checks `git status` for new implementation files. Fails with "STRICT TDD VIOLATION" if code is created without a corresponding test file.
+- **Gate 2: Strict TDD Enforcer**: Checks `git status` for new implementation files. Fails with "STRICT TDD VIOLATION" if code is created without a corresponding test file (implemented by diffing git status and mapping file patterns).
 - **Gate 3: Coverage Check**: If a `coverage` script exists, it ensures thresholds are met before allowing a passage.
 
 ## Visual Proof: Signal vs. Noise
