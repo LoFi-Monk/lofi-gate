@@ -57,7 +57,7 @@ Time:        4.5s
 AiVerify strips the noise. Your agent stays focused on the logic.
 
 ```text
-$ python verify.py --parallel
+$ python aiverify.py --parallel
 🚀 Running 4 checks in PARALLEL...
 ----------------------------------------
 ✅ TDD Check Passed! (0.10s)
@@ -72,12 +72,12 @@ $ python verify.py --parallel
 
 ### Installation
 
-Move `verify.py` into your `scripts/` directory or project root.
+Move `aiverify.py` into your `scripts/` directory or project root.
 
 ### Usage
 
 ```bash
-python verify.py --parallel
+python aiverify.py --parallel
 ```
 
 ### Flags
@@ -91,9 +91,52 @@ Add it to your `package.json`:
 
 ```json
 "scripts": {
-  "verify": "python verify.py --parallel"
+  "verify": "python aiverify.py --parallel"
 }
 ```
+
+---
+
+## Detailed Setup & Trust Gates
+
+AiVerify is designed to be your project's **Local Trust Gate**. It ensures that your AI agent never commits or pushes code that hasn't been strictly verified.
+
+### 1. The Node.js "Professional" setup
+
+For Node projects, don't just run it manually. Make it the default gate using **Husky**:
+
+1. **Install Husky**: `npm install husky --save-dev && npx husky init`
+2. **Add the Hook**: Update your `.husky/pre-push` or `.husky/pre-commit` file:
+   ```bash
+   # .husky/pre-push
+   npm run verify
+   ```
+   Now, the AI agent _cannot_ push code unless the "Pure Signal" is achieved.
+
+### 2. Implementation for Python
+
+If you are working in a Python environment, `aiverify.py` will autodetect `pytest` or `requirements.txt`.
+
+```bash
+# Set up a alias or script
+python aiverify.py --parallel
+```
+
+### 3. Implementation for Rust (Blazing Fast)
+
+AiVerify loves Rust. It wraps `cargo test` and `cargo check` to provide near-instant feedback.
+Ensure your `aiverify.py` is in the root, and run:
+
+```bash
+python aiverify.py --parallel
+```
+
+_Note: In our tests, local verification with AiVerify took <30 seconds, compared to 5+ minutes for equivalent cloud CI runs._
+
+### 4. A Note on CI (GitHub Actions)
+
+**Keep AiVerify local.**
+While you _could_ run AiVerify in GitHub Actions, it is optimized for **Human-AI Pair Speed**. In CI, you usually want the verbose logs for post-mortem debugging. Keep AiVerify in your local dev loop to maintain the "Fast Internal Feedback Loop" described in the Spotify research.
 
 ---
 
