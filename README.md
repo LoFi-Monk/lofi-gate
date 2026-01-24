@@ -123,26 +123,42 @@ Add to `package.json`:
 
 ---
 
-## Detailed Setup & Trust Gates
+## The Full Suite Strategy
 
-### 1. The Node.js "Professional" setup
+AiVerify is designed to be Part 1 of an **Inescapable Quality Harness** for AI Agents. To replicate our "Spotify-grade" results, we recommend this 3-Layer approach:
 
-For Node projects, make it the default gate using **Husky**:
+### Layer 1: Local Gates (AiVerify)
 
-1. **Install**: `npm install husky --save-dev && npx husky init`
-2. **Add Hook**: Update `.husky/pre-push`:
-   ```bash
-   npm run verify
-   ```
+- **Goal**: Context Preservation & Speed.
+- **Tool**: `aiverify.py` (Local Trust Gate).
+- **Setup**:
+  1. Install Husky: `npm install husky --save-dev && npx husky init`
+  2. Add Pre-Push Hook: `echo "npm run verify" > .husky/pre-push`
+     _Result: The Agent cannot push "noisy" or broken code._
 
-### 2. Cross-Language Support
+### Layer 2: Repo Rules (The Hard Block)
 
-- **Python**: Autodetects `pytest` or `requirements.txt`.
-- **Rust (Blazing Fast)**: Wraps `cargo test` and `cargo check`. (Local speed <30s vs Cloud CI 5m).
+- **Goal**: Prevent Bypassing.
+- **Tool**: GitHub/GitLab Branch Protection.
+- **Configuration**:
+  - **Require Pull Request**: Ensure no direct pushes to `main`.
+  - **Require Status Checks**: Force CI to pass before merging.
+  - **Do Only**: prevent admins from bypassing rules.
+    _Result: Even if the Agent tries to use `--no-verify`, the repo rejects the merge._
 
-### 3. A Note on CI (GitHub Actions)
+### Layer 3: Remote Verification (Standard CI)
 
-**Keep AiVerify local.** It is optimized for **Human-AI Pair Speed**. In CI, use standard verbose logs for post-mortem debugging.
+- **Goal**: Post-Mortem Debugging.
+- **Tool**: GitHub Actions / GitLab CI.
+- **Configuration**: Run full standard tests (Jest/Pytest) with verbose logging.
+- **Note**: Keep AiVerify **local**. Use the verbose CI logs only for deep debugging when things go wrong.
+
+---
+
+### A Note on "AI Instructions"
+
+**We do NOT recommend adding specific instructions for AiVerify to your Agent's system prompt.**
+Our research shows that Agents perform best when the environment _forces_ compliance naturally. By setting up Layer 1 (Husky) and Layer 2 (Repo Rules), the Agent encounters a "Physics of the Repo" that it must respect, without needing confusing meta-instructions.
 
 ---
 
