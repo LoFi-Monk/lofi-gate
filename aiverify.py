@@ -47,7 +47,8 @@ def run_command(command, label="Test"):
             shell=True, 
             stdout=subprocess.PIPE, 
             stderr=subprocess.STDOUT, 
-            text=True
+            text=True,
+            errors='replace' # Handle encoding issues on Windows
         )
         duration = time.time() - start_time
         return process.returncode, process.stdout, duration
