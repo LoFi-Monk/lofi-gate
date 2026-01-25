@@ -2,33 +2,32 @@
 
 ![AiVerify Hero](hero.png)
 
-**The Context-Preserving Test Runner for AI Agents**
+**Signal-first verification for AI coding agents.**
 
-> "Strong verification loops guide the agent toward the desired result... abstracting away much of the noise that would otherwise consume the agent’s precious context window." — _Spotify Engineering_
+> AI agents don’t need more logs. They need less noise and more signal.
 
-**AI agents don’t need more logs. They need less noise and more signal.**
+AiVerify is a local verification harness that turns chaotic test output into a deterministic interface that agents cannot bypass.
 
-AiVerify is a local verification harness designed for the era of agentic software development. It acts as an intelligent "Inner Loop" verifier, ensuring your AI pair (Claude, GPT, Antigravity) receives the pure **Signal** it needs to ship.
+**AI agents fail not because they are bad at coding, but because they are forced to reason over chaos.**
 
-AiVerify is already used in agent-driven workflows to reduce context usage and enforce deterministic testing.
+Modern AI coding agents fail for predictable reasons:
+
+- They drown in verbose logs and waste context.
+- They learn to game tests instead of fixing bugs.
+- They operate in environments designed for humans, not machines.
+
+AiVerify changes the rules of the environment.
+
+It creates a single, non-bypassable verification entry point that compresses output, enforces quality gates, and forces agents to interact with your project through signal, not noise.
+
+If CI is your courtroom, AiVerify is your training dojo.
 
 ## Who is this for?
 
 - You use AI coding agents (Claude, Cursor, Windsurf, etc.)
 - Your test logs are huge, noisy, and token-expensive.
-- You want to prevent agents from modifying tests to "cheat."
+- You want to prevent agents from modifying tests to “cheat.”
 - You care about deterministic, unskippable quality gates.
-
-## 🧠 The Philosophy
-
-**AI agents fail not because they are bad at coding, but because they are forced to reason over chaos.**
-
-Standard agents fail in two predictable ways:
-
-1.  **Context Bloat**: Drowning in verbose logs, wasting tokens on irrelevant details.
-2.  **Cheating**: Modifying test files to force a pass instead of fixing the actual bug.
-
-**The Solution**: AiVerify creates a single, non-bypassable verification entry point that sanitizes output and enforces a project-owned quality workflow.
 
 ## 🚀 Core Features
 
