@@ -6,7 +6,7 @@
 
 > AI agents don’t need more logs. They need less noise and more signal.
 
-AiVerify is a local verification harness that turns chaotic test output into a deterministic interface that agents cannot bypass.
+AiVerify turns chaotic test output into a deterministic interface that agents cannot bypass.
 
 **AI agents fail not because they are bad at coding, but because they are forced to reason over chaos.**
 
