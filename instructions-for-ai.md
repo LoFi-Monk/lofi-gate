@@ -32,6 +32,6 @@ You MUST configure the `package.json` with these exact scripts to ensure compati
 
 ### 3. Usage Rules
 
-- **Always** run `npm run verify` before telling the user you are done.
+- **Always** run `npm test` (which triggers the verification gate) before telling the user you are done.
 - **Never** use `--no-verify` or attempt to bypass hooks.
-- If `npm run verify` fails, read the error log. Do **not** edit the test file to make it pass unless the test itself is incorrect. Fix the implementation code.
+- If `npm test` fails, read the error log. Do **not** edit the test file to make it pass unless the test itself is incorrect. Fix the implementation code.
