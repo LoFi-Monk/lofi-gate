@@ -111,7 +111,7 @@ def determine_test_command(scripts):
     
     # Python Detection
     if os.path.exists("pyproject.toml") or os.path.exists("requirements.txt") or os.path.isdir("tests"): 
-        return "pytest"
+        return "python -m pytest"
         
     return "npx jest"
 
