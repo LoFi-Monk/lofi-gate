@@ -96,6 +96,16 @@ AiVerify compresses the same idea to human scale: what happens when every develo
 Spotify engineering deep dive:
 https://engineering.atspotify.com/2025/12/feedback-loops-background-coding-agents-part-3
 
+## ⚖️ The Judge Skill (Optional)
+
+While `aiverify.py` checks the _Physics_ (Tests, Lint, Coverage), the **Judge Skill** checks the _Law_ (Intent, Anti-Cheating).
+
+- **Role**: A self-reflexive agent skill that runs _after_ tests pass.
+- **Checks**:
+  - **Anti-Cheat**: "Did I modify existing tests?" (Forbidden).
+  - **Intent**: "Did I actually fix the bug or just patch the symptom?"
+- **Usage**: Copy `.agent/skills/ai-verify-judge` to your agent's skill directory.
+
 AiVerify **deterministically** enforces these project rules without agent intervention:
 
 - **Gate 1: Security Scan**: If `package.json` exists, it runs `npm audit --audit-level=high`. Blocks on Critical/High vulnerabilities.
