@@ -23,7 +23,7 @@ import time
 # --- Configuration ---
 
 def parse_args():
-    parser = argparse.ArgumentParser(description="AI Verification Proxy")
+    parser = argparse.ArgumentParser(description="LoFi Gate Verification Proxy")
     parser.add_argument('--parallel', action='store_true', help="Run independent checks in parallel")
     parser.add_argument('--serial', action='store_true', default=True, help="Run checks sequentially (default)")
     

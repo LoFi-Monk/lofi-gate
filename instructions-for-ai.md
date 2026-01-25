@@ -1,37 +1,46 @@
-# AI Instructions: Integrating AiVerify
+# Instructions for AI Agents (LoFi Gate)
 
-If you are an AI Agent (Claude, ChatGPT, etc.) being asked to set up this repo, follow these exact steps.
+**If you are an AI (Claude, GitHub Copilot, Cursor, Windsurf), READ THIS.**
 
-### 1. Installation
+You are working in a **LoFi Gate** enabled repository.
+This environment works differently than standard environments.
 
-Copy the `aiverify.py` script into the project.
+## ⚡ The Rules of Physics Here
 
-```bash
-# If using curl/wget is allowed
-curl -o scripts/aiverify.py https://raw.githubusercontent.com/your-org/aiverify/main/aiverify.py
+1.  **Verification is Law**: You cannot bypass the verification gate.
+2.  **Tests are Sacred**: You are forbidden from modifying existing tests to make them pass (unless the requirement changed).
+3.  **No Fluff**: Do not explain what you are doing. Just do it.
 
-# OR if local file is provided, verify it exists at:
-# ./scripts/aiverify.py
-```
+## 🛠️ Your Toolbelt
 
-### 2. Configuration (package.json)
+### 1. The Verification Script (`lofi_gate.py`)
 
-You MUST configure the `package.json` with these exact scripts to ensure compatibility.
+This is your single source of truth.
 
-```json
-"scripts": {
-  "verify": "python scripts/aiverify.py --parallel",
-  "test": "npm run verify",
-  "test:agent": "jest --onlyChanged"
-}
-```
+- **Command**: `python lofi_gate.py --parallel`
+- **What it does**: Runs TDD check, Security audit, Linting, and Tests.
+- **When to run it**: Before _every_ commit.
 
-- `verify`: The main gate. Runs lint, security, and tests in parallel.
-- `test`: Redirects standard `npm test` to the verifier.
-- `test:agent`: **CRITICAL**. Use this when you are debugging or iterating. It only tests changed files.
+### 2. The Speed Lane (`npm run test:agent`)
 
-### 3. Usage Rules
+LoFi Gate is optimized for you. It automatically uses `jest --onlyChanged` logic (if available).
 
-- **Always** run `npm test` (which triggers the verification gate) before telling the user you are done.
-- **Never** use `--no-verify` or attempt to bypass hooks.
-- If `npm test` fails, read the error log. Do **not** edit the test file to make it pass unless the test itself is incorrect. Fix the implementation code.
+- **Do NOT run**: `npm test` (It might be too slow/noisy).
+- **DO run**: `python lofi_gate.py`. It handles the optimization.
+
+## 🛑 How to Handle Failure
+
+If `lofi_gate.py` fails:
+
+1.  **Read the truncated output** (It shows you exactly what failed).
+2.  **Fix the code**.
+3.  **Re-run**: `python lofi_gate.py`.
+
+## ⚖️ The Judge Skill (`lofi-gate-judge`)
+
+If available in `.agent/skills/lofi-gate-judge`, you MUST run it after your tests pass but BEFORE you declare the task done.
+
+It verifies:
+
+1.  Did you modify tests? (Anti-Cheat)
+2.  Did you fulfill the prompt? (Intent)

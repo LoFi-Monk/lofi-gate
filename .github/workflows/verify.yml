@@ -22,6 +22,6 @@ jobs:
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-      - name: Run AiVerify Gate
+      - name: Run LoFi Gate
         # We use our own tool to verify ourselves. Deep recursion.
-        run: python aiverify.py --serial
+        run: python lofi_gate.py --serial

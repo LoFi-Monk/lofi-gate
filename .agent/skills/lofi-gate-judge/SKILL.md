@@ -1,9 +1,9 @@
 ---
-name: ai-verify-judge
-description: Use this skill after completing a coding task and all tests pass. Before declaring your work done, invoke this skill to verify you stayed within scope and didn't manipulate tests.
+name: lofi-gate-judge
+description: A self-reflexive verification skill that ensures agent compliance with LoFi Gate rules (Anti-Cheat, Intent Check).
 ---
 
-# The Judge
+# LoFi Gate Judge Skill
 
 You have completed coding and tests are passing. Now you must judge your own work before declaring victory.
 
