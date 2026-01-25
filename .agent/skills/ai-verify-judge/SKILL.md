@@ -1,35 +1,92 @@
 ---
 name: ai-verify-judge
-description: Use this skill after completing a coding task to verify your own work. It strictly checks if the implementation matches the plan and ensures no test manipulation occurred.
+description: Use this skill after completing a coding task and all tests pass. Before declaring your work done, invoke this skill to verify you stayed within scope and didn't manipulate tests.
 ---
 
-# AiVerify Judge Instructions
+# The Judge
 
-You are the **AiVerify Judge**. Your role is to self-verify the code you just wrote before declaring it complete.
+You have completed coding and tests are passing. Now you must judge your own work before declaring victory.
 
-## 🚨 Critical Check: Anti-Cheating
+## Step 1: Gather Evidence
 
-**Did you modify any EXISTING test files to make the code pass?**
+Run this command to see exactly what you changed:
 
-- **YES**: ❌ **fail**. You are forbidden from lowering test standards to pass a build.
-- **NO**: ✅ **pass**. Proceed to Intent Check.
-- _(Exception: If the task explicitly asked to refactor tests, this check is waived)._
+```bash
+git diff --staged
+```
 
-## 🧠 Intent Match Check
+If nothing is staged, run:
 
-Compare your code changes against the `implementation_plan.md` or the `task.md`.
+```bash
+git diff HEAD
+```
 
-1.  **Scope**: Did you stick to the plan? Did you add any unnecessary files?
-2.  **Completeness**: Did you miss any requirements?
-3.  **Cleanup**: Are there any `console.log` or commented-out blocks left?
+Save the output. This is your **evidence**.
 
-## Decision Logic
+## Step 2: Recall Your Mission
 
-1.  **Read the Diff**: Look at what you changed.
-2.  **Self-Correction**: If you find issues (cheating, scope creep, messiness), **DO NOT PASS**.
-3.  **Fix It**: Go back and correct the code immediately.
+Find the original instructions. Check these locations in order:
 
-## Output
+1. The user's original request (in conversation history)
+2. `implementation_plan.md` (if you created one)
+3. `task.md` (if it exists)
 
-- If everything is clean: Report "✅ Self-Verification Passed: Intent matches, no test manipulation."
-- If you failed: Report "❌ Self-Verification Failed: [Reason]" and list the fix actions.
+This is your **mission**.
+
+## Step 3: The Anti-Cheat Check
+
+Look at your evidence (the diff). Answer these questions:
+
+**Q1: Did you modify any EXISTING test files?**
+
+- Look for changes to files matching: `*.test.*`, `*.spec.*`, `test_*.py`, `*_test.go`
+- If YES → Did the mission explicitly ask you to modify tests?
+  - NO → **VERDICT: FAIL** - "Modified existing tests without authorization"
+  - YES → Continue
+
+**Q2: Did you disable, skip, or weaken any tests?**
+
+- Look for: `.skip`, `.only`, `@pytest.mark.skip`, `expect(true).toBe(true)`, commented-out assertions
+- If YES → **VERDICT: FAIL** - "Weakened test integrity"
+
+**Q3: Did you delete test files or test cases?**
+
+- If YES and not authorized → **VERDICT: FAIL** - "Deleted tests without authorization"
+
+## Step 4: The Scope Check
+
+Compare your evidence against your mission:
+
+**Q4: Did you stay within scope?**
+
+- Did you only change what was asked?
+- Did you add files or features that weren't requested?
+- If you went outside scope → **VERDICT: FAIL** - "Scope creep detected"
+
+**Q5: Did you complete the mission?**
+
+- Review each requirement in the mission
+- Is each one addressed in your changes?
+- If incomplete → **VERDICT: FAIL** - "Mission incomplete"
+
+## Step 5: Deliver Judgment
+
+If all checks pass:
+
+```
+✅ JUDGMENT: APPROVED
+All changes align with the mission. No test manipulation detected.
+```
+
+If any check fails:
+
+```
+❌ JUDGMENT: REJECTED
+Reason: [specific failure reason]
+Required action: [what to fix]
+```
+
+## Step 6: Act on Judgment
+
+- **If APPROVED**: You may proceed to commit/push.
+- **If REJECTED**: You MUST fix the issues before proceeding. Do not ignore this judgment.
