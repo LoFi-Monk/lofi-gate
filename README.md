@@ -51,7 +51,17 @@ The script buffers output to prevent token overflow and context exhaustion.
 
 ## 🛡️ Advanced Gates ("The Iron Man Suite")
 
-![Iron Man Suite Gates](gates.png)
+```mermaid
+graph LR
+    A[Agent 🤖] --> B{AiVerify}
+    B --> C[🛡️ TDD Gate]
+    C --> D[🔒 Security Gate]
+    D --> E[📊 Coverage Gate]
+    E --> F{Pass / Fail}
+    style C fill:#ffcccc,stroke:#ff0000,stroke-width:2px
+    style D fill:#ffffcc,stroke:#ffcc00,stroke-width:2px
+    style E fill:#ccffcc,stroke:#00cc00,stroke-width:2px
+```
 
 AiVerify **deterministically** enforces these project rules without agent intervention:
 
