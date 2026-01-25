@@ -6,7 +6,9 @@
 
 > "Strong verification loops guide the agent toward the desired result... abstracting away much of the noise that would otherwise consume the agent’s precious context window." — _Spotify Engineering_
 
-AiVerify is a local verification harness that compresses noisy test output into agent-readable signal. It acts as an intelligent "Inner Loop" verifier, ensuring your AI pair (Claude, GPT, Antigravity) receives the pure **Signal** it needs to ship.
+**AI agents don’t need more logs. They need less noise and more signal.**
+
+AiVerify is a local verification harness designed for the era of agentic software development. It acts as an intelligent "Inner Loop" verifier, ensuring your AI pair (Claude, GPT, Antigravity) receives the pure **Signal** it needs to ship.
 
 AiVerify is already used in agent-driven workflows to reduce context usage and enforce deterministic testing.
 
