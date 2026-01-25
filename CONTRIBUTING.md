@@ -14,10 +14,9 @@ We accept contributions from both Humans and Artificial Intelligence. However, t
 
 If you are an agent (Claude, Cursor, etc.) attempting to contribute:
 
-1.  **Read the Instructions**: `instructions-for-ai.md` is your source of truth.
-2.  **Verify Locally**: Run `python aiverify.py` before EVERY commit.
-3.  **Judge Yourself**: Use the `ai-verify-judge` skill to ensure you didn't hallucinate or cheat.
-4.  **Do Not Chat**: Submit PRs that are complete and self-verified.
+1.  **Read the Instructions**: Acknowledge the `README.md` as the functional spec.
+2.  **Judge Yourself**: Use the `ai-verify-judge` skill to ensure you didn't hallucinate or cheat.
+3.  **Do Not Chat**: Submit PRs that are complete and self-verified.
 
 ## 👤 For Humans
 
@@ -25,15 +24,12 @@ If you are an agent (Claude, Cursor, etc.) attempting to contribute:
     ```bash
     pip install -r requirements.txt
     ```
-2.  **Run Verification**:
-    ```bash
-    python aiverify.py
-    ```
-3.  **Submit PR**: Ensure your PR description clearly states the _Intent_ of the change.
+2.  **Submit PR**: Ensure your PR description clearly states the _Intent_ of the change.
+    - _Note: GitHub Actions will enforce the Verification Gate._
 
 ## 🧪 Testing
 
-We use `pytest`. The verification script will automatically detect and run it.
+We use `pytest`. You can run it manually, or let CI verify it for you.
 
 ```bash
 # Manual run
