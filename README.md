@@ -86,22 +86,35 @@ $ python aiverify.py --parallel
 ✨ All systems go!
 ```
 
-## Quick Start
+## ⚡ 30-Second Setup
 
-### Installation
+1. **Copy the script**:
 
-Move `aiverify.py` into your `scripts/` directory or project root.
+   ```bash
+   cp aiverify.py scripts/
+   ```
 
-### Usage
+2. **Add the scripts** (one-liner):
 
-```bash
-python aiverify.py --parallel
-```
+   ```bash
+   npm pkg set scripts.verify="python scripts/aiverify.py --parallel"
+   ```
 
-### Flags
+3. **Run it**:
+   ```bash
+   npm run verify
+   ```
 
-- `--parallel`: Run independent checks (Lint, Security, Test) concurrently.
-- `--serial`: Run checks one by one (default, handles fail-fast cases).
+_Need help wiring it up? Point your agent to [instructions-for-ai.md](instructions-for-ai.md)._
+
+## 🛑 How is this different from CI?
+
+**AiVerify is not CI.**
+
+- **CI (GitHub Actions)** is slow, verbose, and remote. It is for humans _after_ a failure.
+- **AiVerify** is fast, compressed, and local. It is for Agents _before_ they commit.
+
+Use AiVerify to keep your "Inner Loop" fast (<10s), and let CI be your final "Outer Loop" safety net.
 
 ## ⚙️ Configuration
 
@@ -179,8 +192,8 @@ Before enforcing gates, you must map the territory for the Agent.
 
 AiVerify isn't just for JavaScript. It's a universal adapter for AI-friendly verification.
 
-- **Python**: Automatically detects `pytest` or `requirements.txt`.
-- **Rust (Blazing Fast)**: Wraps `cargo test` and `cargo check`.
+- **Python**: Designed to integrate with `pytest` workflows.
+- **Rust (Blazing Fast)**: Designed to wrap `cargo test` and `cargo check`.
   - _Benchmark_: Local verification with AiVerify took **<30 seconds**, compared to **5+ minutes** for equivalent cloud CI runs.
 
 ---
