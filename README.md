@@ -178,7 +178,9 @@ If CI is your courtroom, AiVerify is your training dojo.
 
 ## ⚙️ Configuration
 
-AiVerify respects your standard tool configurations.
+AiVerify respects your standard tool configurations (Jest, Vitest, Pytest, Cargo, etc).
+
+_Running Python? Rust? Go? AiVerify automatically detects `pyproject.toml`, `Cargo.toml`, or `go.mod`._
 
 **To set a Coverage Threshold (Jest example):**
 
