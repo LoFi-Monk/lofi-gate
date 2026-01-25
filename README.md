@@ -71,6 +71,31 @@ The script buffers output to prevent token overflow and context exhaustion.
     }
 ```
 
+---
+
+AI agents were dropped into toolchains designed for humans.
+
+Logs are verbose, signals are buried, and correctness is ambiguous.  
+So agents learn to navigate chaos instead of solving problems.
+
+AiVerify changes the environment.
+
+It turns unbounded test output into a deterministic interface, forces every action through verification gates, and makes success or failure impossible to misinterpret.
+
+CI judges results after the fact.  
+AiVerify trains agents before they commit.
+
+---
+
+## Verification Loops, at Scale
+
+Spotify’s background coding agents rely on verification loops and verifiers to control agent behavior at organizational scale.
+
+AiVerify compresses the same idea to human scale: what happens when every developer has their own verification loop?
+
+Spotify engineering deep dive:
+https://engineering.atspotify.com/2025/12/feedback-loops-background-coding-agents-part-3
+
 AiVerify **deterministically** enforces these project rules without agent intervention:
 
 - **Gate 1: Security Scan**: If `package.json` exists, it runs `npm audit --audit-level=high`. Blocks on Critical/High vulnerabilities.
@@ -195,6 +220,10 @@ Before enforcing gates, you must map the territory for the Agent.
   1. Install Husky: `npm install husky --save-dev && npx husky init`
   2. Add Pre-Push Hook: `echo "npm run verify" > .husky/pre-push`
      _Result: The Agent cannot push "noisy" or broken code to the server._
+
+**AiVerify cannot stop an agent from pushing code directly to GitHub.**
+That is the role of branch protection rules.
+AiVerify defines what “verified” means. GitHub enforces it.
 
 ### Layer 2: Repo Rules (The Hard Block)
 
