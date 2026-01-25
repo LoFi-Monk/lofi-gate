@@ -1,4 +1,4 @@
-name: AiVerify CI
+name: LoFi Gate CI
 
 on:
   push:

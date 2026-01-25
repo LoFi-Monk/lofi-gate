@@ -2,7 +2,7 @@
 
 **Signal-first verification for AI coding agents.**
 
-![AiVerify Hero](hero.png)
+![LoFi Gate Hero](hero.png)
 
 > AI agents don’t need more logs. They need less noise and more signal.
 
@@ -178,7 +178,7 @@ If CI is your courtroom, LoFi Gate is your training dojo.
 
 ## ⚙️ Configuration
 
-AiVerify respects your standard tool configurations (Jest, Vitest, Pytest, Cargo, etc).
+LoFi Gate respects your standard tool configurations (Jest, Vitest, Pytest, Cargo, etc).
 
 _Running Python? Rust? Go? LoFi Gate automatically detects `pyproject.toml`, `Cargo.toml`, or `go.mod`._
 
