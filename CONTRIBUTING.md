@@ -14,9 +14,9 @@ If the Build passes and the Idea is good, we merge.
 
 ## 🧪 Testing
 
-We use `pytest`. You can run it manually, or let CI verify it for you.
+You have two options for local testing:
 
-```bash
-# Manual run
-pytest
-```
+1.  **Standard Way**: Run `pytest` directly.
+2.  **The "Iron Man" Way**: Run `python aiverify.py` to see exactly what CI will see (Lint + Security + Tests).
+
+Both are acceptable. CI will be the final judge.
