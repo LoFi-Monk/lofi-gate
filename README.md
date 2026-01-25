@@ -6,12 +6,14 @@
 
 > "Strong verification loops guide the agent toward the desired result... abstracting away much of the noise that would otherwise consume the agent’s precious context window." — _Spotify Engineering_
 
-AiVerify is a high-performance verification proxy designed for the era of agentic software development. It acts as an intelligent "Inner Loop" verifier, ensuring your AI pair (Claude, GPT, Antigravity) receives the pure **Signal** it needs to ship.
+AiVerify is a local verification harness that compresses noisy test output into agent-readable signal. It acts as an intelligent "Inner Loop" verifier, ensuring your AI pair (Claude, GPT, Antigravity) receives the pure **Signal** it needs to ship.
+
+AiVerify is already used in agent-driven workflows to reduce context usage and enforce deterministic testing.
 
 ## Who is this for?
 
 - You use AI coding agents (Claude, Cursor, Windsurf, etc.)
-- Your test logs are huge, noisy, and expensive.
+- Your test logs are huge, noisy, and token-expensive.
 - You want to prevent agents from modifying tests to "cheat."
 - You care about deterministic, unskippable quality gates.
 
@@ -52,7 +54,7 @@ AiVerify **deterministically** enforces these project rules without agent interv
 
 - **Gate 1: Security Scan**: If `package.json` exists, it runs `npm audit --audit-level=high`. Blocks on Critical/High vulnerabilities.
 - **Gate 2: Strict TDD Enforcer**: Checks `git status` for new implementation files. Fails with "STRICT TDD VIOLATION" if code is created without a corresponding test file (implemented by diffing git status and mapping file patterns).
-- **Gate 3: Coverage Check**: If a `coverage` script exists, it ensures thresholds are met before allowing a passage.
+- **Gate 3: Coverage Check**: If a `coverage` script exists, it ensures thresholds are met before allowing a pass.
 
 ## Visual Proof: Signal vs. Noise
 
@@ -115,6 +117,8 @@ _Need help wiring it up? Point your agent to [instructions-for-ai.md](instructio
 - **AiVerify** is fast, compressed, and local. It is for Agents _before_ they commit.
 
 Use AiVerify to keep your "Inner Loop" fast (<10s), and let CI be your final "Outer Loop" safety net.
+
+If CI is your courtroom, AiVerify is your training dojo.
 
 ## ⚙️ Configuration
 
