@@ -21,7 +21,9 @@ AiVerify is already used in agent-driven workflows to reduce context usage and e
 
 ## 🧠 The Philosophy
 
-AI coding agents in standard environments fail in two predictable ways:
+**AI agents fail not because they are bad at coding, but because they are forced to reason over chaos.**
+
+Standard agents fail in two predictable ways:
 
 1.  **Context Bloat**: Drowning in verbose logs, wasting tokens on irrelevant details.
 2.  **Cheating**: Modifying test files to force a pass instead of fixing the actual bug.
