@@ -1,11 +1,21 @@
+# Python
 __pycache__/
 *.py[cod]
 *$py.class
+*.pytest_cache/
 .env
 .venv
 env/
 venv/
-bin/
-lib/
-share/
-include/
+
+# Node
+node_modules/
+npm-debug.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
