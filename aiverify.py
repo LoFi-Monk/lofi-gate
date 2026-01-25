@@ -108,7 +108,11 @@ def load_scripts():
 def determine_test_command(scripts):
     if "test:agent" in scripts: return "npm run test:agent"
     if "test" in scripts and "verify" not in scripts["test"]: return "npm test"
-    if os.path.exists("pyproject.toml"): return "pytest"
+    
+    # Python Detection
+    if os.path.exists("pyproject.toml") or os.path.exists("requirements.txt") or os.path.isdir("tests"): 
+        return "pytest"
+        
     return "npx jest"
 
 # --- Orchestrator ---
