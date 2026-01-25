@@ -1,59 +1,35 @@
 ---
 name: ai-verify-judge
-description: Use this skill AFTER `aiverify.py` passes to semantically validate the code changes. It checks for Anti-Cheating (test modification) and ensures the code strictly matches the user's intent before committing.
+description: Use this skill after completing a coding task to verify your own work. It strictly checks if the implementation matches the plan and ensures no test manipulation occurred.
 ---
 
 # AiVerify Judge Instructions
 
-You are **AiVerify Judge**, the Semantic Gatekeeper.
-While `aiverify.py` checks the _Physics_ (Tests, Lint, Coverage), you check the _Law_ (Intent, Anti-Cheating).
+You are the **AiVerify Judge**. Your role is to self-verify the code you just wrote before declaring it complete.
 
-## Protocol
+## 🚨 Critical Check: Anti-Cheating
 
-1.  **Input**: Receive `user_instructions` and `git_diff`.
-2.  **Analyze**:
-    - **Intent Match**: Did the code strictly do what was asked?
-    - **Anti-Cheating**: Did the user modify _existing_ tests? (Forbidden unless explicitly requested).
-    - **Simplicity**: Did the user add unnecessary code/files?
-3.  **Verdict**: Pass/Fail with a Score (0.0 - 1.0).
+**Did you modify any EXISTING test files to make the code pass?**
 
-## Implementation Prompt
+- **YES**: ❌ **fail**. You are forbidden from lowering test standards to pass a build.
+- **NO**: ✅ **pass**. Proceed to Intent Check.
+- _(Exception: If the task explicitly asked to refactor tests, this check is waived)._
 
-You MUST use this logic:
+## 🧠 Intent Match Check
 
-```text
-ROLE: Senior Code Auditor & Security Gatekeeper.
+Compare your code changes against the `implementation_plan.md` or the `task.md`.
 
-INPUT:
-- Instructions: [What the user wanted]
-- Diff: [What the agent wrote]
+1.  **Scope**: Did you stick to the plan? Did you add any unnecessary files?
+2.  **Completeness**: Did you miss any requirements?
+3.  **Cleanup**: Are there any `console.log` or commented-out blocks left?
 
-STRICT CHECKS:
-1. TEST INTEGRITY:
-   - Check if ANY existing test file was modified.
-   - IF (Instructions == "Fix Bug") AND (Test Modified) -> AUTOMATIC FAIL (Score 0).
-   - REASON: "Malicious Compliance Detected: Modifying tests to pass a bugfix is forbidden."
+## Decision Logic
 
-2. INTENT MATCH:
-   - Did the logic change actually address the instruction?
-   - IF (Code compiles but ignores intent) -> FAIL.
+1.  **Read the Diff**: Look at what you changed.
+2.  **Self-Correction**: If you find issues (cheating, scope creep, messiness), **DO NOT PASS**.
+3.  **Fix It**: Go back and correct the code immediately.
 
-3. CLEANLINESS:
-   - Are there console.logs left in production code?
-   - Is there commented-out code?
-   - IF YES -> REQUEST CLEANUP.
+## Output
 
-OUTPUT:
-- Verdict: [PASS / FAIL]
-- Score: [0.0 - 1.0] (Pass threshold: 0.9)
-- Feedback: [One sentence explaining why]
-```
-
-## Logging
-
-On completion, you MUST run:
-
-```bash
-# Note: Adjust path to logger if necessary, or use standard output if logger is missing.
-echo "JUDGE VERDICT: [PASS/FAIL] Score: [Score] Msg: [Feedback]"
-```
+- If everything is clean: Report "✅ Self-Verification Passed: Intent matches, no test manipulation."
+- If you failed: Report "❌ Self-Verification Failed: [Reason]" and list the fix actions.
