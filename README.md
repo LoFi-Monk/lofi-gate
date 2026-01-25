@@ -1,8 +1,8 @@
 # AiVerify 🤖✅
 
-![AiVerify Hero](hero.png)
-
 **Signal-first verification for AI coding agents.**
+
+![AiVerify Hero](hero.png)
 
 > AI agents don’t need more logs. They need less noise and more signal.
 
