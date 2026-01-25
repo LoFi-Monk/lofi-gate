@@ -51,16 +51,24 @@ The script buffers output to prevent token overflow and context exhaustion.
 
 ## 🛡️ Advanced Gates ("The Iron Man Suite")
 
-```mermaid
-graph LR
-    A[Agent 🤖] --> B{AiVerify}
-    B --> C[🛡️ TDD Gate]
-    C --> D[🔒 Security Gate]
-    D --> E[📊 Coverage Gate]
-    E --> F{Pass / Fail}
-    style C fill:#ffcccc,stroke:#ff0000,stroke-width:2px
-    style D fill:#ffffcc,stroke:#ffcc00,stroke-width:2px
-    style E fill:#ccffcc,stroke:#00cc00,stroke-width:2px
+```text
+      UNBOUNDED LOGS
+ (errors, stack traces, noise)
+            │
+            ▼
+    ╔════════════════╗
+    ║    AiVerify    ║
+    ║  Compression   ║
+    ║    + Rules     ║
+    ╚════════════════╝
+            │
+            ▼
+    STRUCTURED SIGNAL
+    {
+      status: FAIL,
+      cause: "test_login",
+      location: "auth.spec.ts:42"
+    }
 ```
 
 AiVerify **deterministically** enforces these project rules without agent intervention:
