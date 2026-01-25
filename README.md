@@ -33,9 +33,9 @@ If CI is your courtroom, AiVerify is your training dojo.
 
 ### 1. Eliminating Context Bloat (The "Speed Lane")
 
-Agents run `npm run test:agent` (if configured) to execute tools like `jest --onlyChanged`.
+AiVerify automatically detects and runs `npm run test:agent` (if configured) to execute tools like `jest --onlyChanged`.
 
-- **Result**: The Agent verifies code in seconds, scanning only relevant files.
+- **Result**: The Agent just runs `npm test`, but gets the optimized "Speed Lane" automatically.
 
 ### 2. Smart Truncation
 
