@@ -2,15 +2,26 @@
 
 **Signal-first verification for AI coding agents.**
 
-### The Problem
+## Why? The Shepherd of Cats
 
-AI Agents struggle to debug massive terminal output. A single Jest failure can produce **15,000 tokens of noise**.
-Feeding this to an LLM ensures it misses the root cause and burns through your API budget.
+AI Agents are like cats: smart, autonomous, but easily distracted. You cannot "command" a cat; you have to structure its environment so the only logical thing to do is what you want.
 
-### The Cost
+A Shepherd doesn't:
 
-**"Context Overflow."**
-When error logs exceed the context window, Agents hallucinate fixes or get stuck in failure loops.
+- Ask sheep nicely to stay together.
+- Write documentation about staying together.
+- Hope they follow the process.
+
+A Shepherd:
+
+- **Uses a fence** (Environment Design).
+- **Uses a dog** (Enforcement Mechanism).
+- **Makes it easier to stay together than to wander off.**
+
+### The Reality
+
+A single Jest failure can produce **15,000 tokens of noise**.
+Feeding this to an LLM ensures it misses the root cause and burns through your API budget. "Context Overflow" causes agents to hallucinate fixes or get stuck in failure loops.
 
 ### The Solution
 
