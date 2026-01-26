@@ -3,7 +3,7 @@
 **Signal-first verification for AI coding agents.**
 
 <p align="center">
-  <img src="hero.png" height="320" alt="LoFi Gate Hero">
+  <img src="hero.png" width="100%" alt="LoFi Gate Hero">
 </p>
 
 > AI agents don’t need more logs. They need less noise and more signal.
