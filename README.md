@@ -22,6 +22,18 @@ It creates a single, non-bypassable verification entry point that compresses out
 
 If CI is your courtroom, LoFi Gate is your training dojo.
 
+## 🧾 The Ledger (Proof of Work)
+
+> "Faith is not a strategy. Math is."
+
+| Metric               | The Old Way     | The LoFi Way       |
+| :------------------- | :-------------- | :----------------- |
+| **Context Cost**     | ~15,000 Tokens  | **~250 Tokens**    |
+| **Time to Feedback** | 5m+ (Remote CI) | **<500ms (Local)** |
+| **Wasted Tokens**    | 14,750 (Noise)  | **0 (Signal)**     |
+
+_LoFi Gate pays for itself in 3 runs._
+
 ## Who is this for?
 
 - You use AI coding agents (Claude, Cursor, Windsurf, etc.)
@@ -35,7 +47,7 @@ If CI is your courtroom, LoFi Gate is your training dojo.
 
 LoFi Gate automatically detects and runs `npm run test:agent` (if configured) to execute tools like `jest --onlyChanged`.
 
-- **Result**: The Agent just runs `npm test`, but gets the optimized "Speed Lane" automatically.
+- **Result**: The Agent just runs the standard verification command, but gets the optimized "Speed Lane" automatically if configured (see your stack's setup guide).
 
 ### 2. Smart Truncation
 
@@ -49,7 +61,7 @@ The script buffers output to prevent token overflow and context exhaustion.
 - **Parallelism**: Automatically runs Lint, Security, and Tests concurrently for instant feedback.
 - **Flake Protection**: Automatically retries a failed test command once before reporting it to the agent, reducing friction from flaky tests.
 
-## 🛡️ Advanced Gates ("The Iron Man Suite")
+## 🛡️ Dojo Rules ("The Strict Gates")
 
 ```text
       UNBOUNDED LOGS
@@ -96,6 +108,13 @@ LoFi Gate compresses the same idea to human scale: what happens when every devel
 Spotify engineering deep dive:
 https://engineering.atspotify.com/2025/12/feedback-loops-background-coding-agents-part-3
 
+## 📊 Metrics & Logging
+
+LoFi Gate tracks every token used and every token saved.
+Logs are written to `verification_history.md` in the project root.
+
+[👉 Read the Logging Documentation](docs/logging.md)
+
 ## ⚖️ The Judge Skill (Optional)
 
 While `lofi_gate.py` checks the _Physics_ (Tests, Lint, Coverage), the **Judge Skill** checks the _Law_ (Intent, Anti-Cheating).
@@ -116,54 +135,83 @@ LoFi Gate **deterministically** enforces these project rules without agent inter
 
 ### ❌ The Old Way (Toxic Noise)
 
-```text
-$ npm test
-> project@1.0.0 test
-> jest
+![The Old Way](testing-old-way.gif)
 
- PASS  test/auth.test.js (1.2s)
- PASS  test/utils.test.js (0.8s)
- PASS  test/api.test.js (2.1s)
- ... [500 lines of passing details] ...
-Test Suites: 15 passed, 15 total
-Tests:       84 passed, 84 total
-Time:        4.5s
-```
+_Result: 50+ lines of noise per second. Context window flooded._
 
 ### ✅ The LoFi Gate Way (Pure Signal)
 
-```text
-$ python aiverify.py --parallel
-🚀 Running 4 checks in PARALLEL...
-----------------------------------------
-✅ TDD Check Passed! (0.10s)
-✅ Security Scan Passed! (1.20s)
-✅ Lint Check Passed! (0.85s)
-✅ Test Suite Passed! (2.10s)
-----------------------------------------
-✨ All systems go!
+![The LoFi Way](testing-lofi-way.gif)
+
+_Result: Instant Clean Signal. 98% Token Savings._
+
+### 4. Zero Dependency Metrics (The "Physics")
+
+To maintain `lofi-gate` as a Universal Adapter, we use a consistent character heuristic (4 chars = 1 token).
+
+- **No API Keys**: Runs locally without calling OpenAI/Anthropic.
+- **Instant**: No network latency or heavy pip installs.
+- **Universal**: Works the same on Node, Python, and Rust.
+- **Math**: `Total Savings = (Raw Output) - (Compressed Output)`.
+
+This ensures the tool protects your wallet without needing access to it.
+
+## ⚡ Choose Your Stack
+
+LoFi Gate is a **Universal Adapter**. It speaks your language.
+
+| Stack       | Setup Guide                                  |
+| :---------- | :------------------------------------------- |
+| **Node.js** | [docs/setup-node.md](docs/setup-node.md)     |
+| **Python**  | [docs/setup-python.md](docs/setup-python.md) |
+| **Rust**    | [docs/setup-rust.md](docs/setup-rust.md)     |
+| **Go**      | [docs/setup-go.md](docs/setup-go.md)         |
+
+_Running a local/quantized model? See [Compatibility & Primer](docs/compatibility.md)._
+
+## 📜 The Judge's Constitution
+
+The Judge Skill (`lofi-gate-judge`) is not a black box. It is a strict **Constitutional Checklist** that the Agent must follow before declaring a task done.
+
+It enforces the **Law** (Intent & Integrity), while the script enforces the **Physics** (Tests & Lint).
+
+### The Interrogation (Judge Protocol)
+
+The Judge (`lofi-gate-judge`) does not ask politely. It demands compliance.
+
+1.  **The Anti-Cheat Clause**:
+
+    > 👮 **"Did you modify `tests/auth.test.js`?"**
+    > _Verdict: **REJECTED**. You touched tests but not source code. You are likely gaming the metric._
+
+2.  **The Integrity Clause**:
+
+    > 👮 **"Did you add `.skip` or change `expect(...)` to `true`?"**
+    > _Verdict: **REJECTED**. You are weakening the safety net._
+
+3.  **The Scope Clause**:
+    > 👮 **"Did you delete any test files?"**
+    > _Verdict: **REJECTED**. Destruction of verification assets is forbidden._
+
+### Hall of Shame 🚫
+
+Does your Agent try to cheat? The Judge catches it.
+
+**Example Violation:**
+
+```diff
+- expect(result).toBe(500);
++ // expect(result).toBe(500);
++ expect(true).toBe(true); // Fixed test
 ```
 
-## ⚡ 30-Second Setup
+**Judge Verdict:**
 
-1. **Copy the script**:
-
-   ```bash
-   cp lofi_gate.py scripts/
-   ```
-
-2. **Add the scripts** (one-liner):
-
-   ```bash
-   npm pkg set scripts.verify="python scripts/lofi_gate.py --parallel"
-   ```
-
-3. **Run it**:
-   ```bash
-   npm run verify
-   ```
-
-_Need help wiring it up? Point your agent to [instructions-for-ai.md](instructions-for-ai.md)._
+```
+❌ JUDGMENT: REJECTED
+Reason: Weakened test integrity (commented out assertion).
+Action: Revert test changes and fix the actual code.
+```
 
 ## 🛑 How is this different from CI?
 
@@ -191,17 +239,7 @@ _Running Python? Rust? Go? LoFi Gate automatically detects `pyproject.toml`, `Ca
 ```
 
 **Standard Node Integration:**
-Add to `package.json`:
-
-```json
-"scripts": {
-  "test": "npm run verify",
-  "verify": "python scripts/lofi_gate.py --parallel",
-  "test:agent": "jest --onlyChanged",
-  "lint": "eslint .",
-  "coverage": "jest --coverage"
-}
-```
+_See [docs/setup-node.md](docs/setup-node.md) for full configuration details._
 
 ---
 
@@ -216,8 +254,8 @@ Before enforcing gates, you must map the territory for the Agent.
 
 ```json
 "scripts": {
-  "verify": "python lofi_gate.py --parallel",  // The Main Gate
-  "test": "npm run verify",                   // Redirect standard test
+  "lofi-gate": "python lofi_gate.py --parallel",  // The Main Gate
+  "test": "npm run lofi-gate",                   // Redirect standard test
   "test:agent": "jest --onlyChanged"          // ⚡ THE SPEED LANE
 }
 ```
@@ -230,7 +268,7 @@ Before enforcing gates, you must map the territory for the Agent.
 - **Tool**: `lofi_gate.py` + Husky.
 - **Setup**:
   1. Install Husky: `npm install husky --save-dev && npx husky init`
-  2. Add Pre-Push Hook: `echo "npm run verify" > .husky/pre-push`
+  2. Add Pre-Push Hook: `echo "npm run lofi-gate" > .husky/pre-push`
      _Result: The Agent cannot push "noisy" or broken code to the server._
 
 **LoFi Gate cannot stop an agent from pushing code directly to GitHub.**
@@ -254,13 +292,16 @@ LoFi Gate defines what “verified” means. GitHub enforces it.
 - **Configuration**: Run full standard tests (Jest/Pytest) with verbose logging.
 - **Note**: Keep LoFi Gate **local**. Use the verbose CI logs only for deep debugging when things go wrong.
 
-### 🌍 Beyond Node.js: Python & Rust
+### 🌍 Universal Adapter
 
-LoFi Gate isn't just for JavaScript. It's a universal adapter for AI-friendly verification.
+LoFi Gate isn't just for JavaScript. It works with your stack:
 
-- **Python**: Designed to integrate with `pytest` workflows.
-- **Rust (Blazing Fast)**: Designed to wrap `cargo test` and `cargo check`.
-  - _Benchmark_: Local verification with LoFi Gate took **<30 seconds**, compared to **5+ minutes** for equivalent cloud CI runs.
+- **Node.js**: [👉 Setup Guide](docs/setup-node.md)
+- **Python**: [👉 Setup Guide](docs/setup-python.md)
+- **Rust**: [👉 Setup Guide](docs/setup-rust.md)
+- **Go**: [👉 Setup Guide](docs/setup-go.md)
+
+- _Benchmark_: Local verification with LoFi Gate took **<30 seconds**, compared to **5+ minutes** for equivalent cloud CI runs.
 
 ---
 

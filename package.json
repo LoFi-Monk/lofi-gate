@@ -1,0 +1,17 @@
+{
+  "name": "lofi-gate",
+  "version": "1.0.0",
+  "description": "Signal-first verification for AI coding agents.",
+  "scripts": {
+    "lofi-gate": "python lofi_gate.py --parallel",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "ai",
+    "verification",
+    "agent",
+    "developer-tools"
+  ],
+  "author": "LoFi Monk",
+  "license": "MIT"
+}

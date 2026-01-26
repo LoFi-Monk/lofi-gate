@@ -1,46 +1,48 @@
-# Instructions for AI Agents (LoFi Gate)
+# Instructions for AI Agents: Installing LoFi Gate
 
-**If you are an AI (Claude, GitHub Copilot, Cursor, Windsurf), READ THIS.**
+**Goal**: You are tasked with installing **LoFi Gate** into the user's repository.
 
-You are working in a **LoFi Gate** enabled repository.
-This environment works differently than standard environments.
+## 1. Install the Script
 
-## ⚡ The Rules of Physics Here
+Download the latest `lofi_gate.py` to the project root.
 
-1.  **Verification is Law**: You cannot bypass the verification gate.
-2.  **Tests are Sacred**: You are forbidden from modifying existing tests to make them pass (unless the requirement changed).
-3.  **No Fluff**: Do not explain what you are doing. Just do it.
+```bash
+# If curl is available (Linux/Mac)
+curl -o lofi_gate.py https://raw.githubusercontent.com/LoFi-Monk/lofi-gate/main/lofi_gate.py
 
-## 🛠️ Your Toolbelt
+# If Windows (PowerShell)
+Invoke-WebRequest -Uri https://raw.githubusercontent.com/LoFi-Monk/lofi-gate/main/lofi_gate.py -OutFile lofi_gate.py
+```
 
-### 1. The Verification Script (`lofi_gate.py`)
+## 2. Configure the Environment
 
-This is your single source of truth.
+You must configure the project to use the gate.
+**Read the guide for the specific tech stack you are working in:**
 
-- **Command**: `python lofi_gate.py --parallel`
-- **What it does**: Runs TDD check, Security audit, Linting, and Tests.
-- **When to run it**: Before _every_ commit.
+### 🟢 Node.js
 
-### 2. The Speed Lane (`npm run test:agent`)
+[👉 Read docs/setup-node.md](docs/setup-node.md)
+_Configures `package.json`, "Speed Lane" `test:agent`, and Husky._
 
-LoFi Gate is optimized for you. It automatically uses `jest --onlyChanged` logic (if available).
+### 🐍 Python
 
-- **Do NOT run**: `npm test` (It might be too slow/noisy).
-- **DO run**: `python lofi_gate.py`. It handles the optimization.
+[👉 Read docs/setup-python.md](docs/setup-python.md)
+_Configures `pyproject.toml` and Pre-commit hooks._
 
-## 🛑 How to Handle Failure
+### 🦀 Rust
 
-If `lofi_gate.py` fails:
+[👉 Read docs/setup-rust.md](docs/setup-rust.md)
+_Configures `Cargo.toml` and Git hooks._
 
-1.  **Read the truncated output** (It shows you exactly what failed).
-2.  **Fix the code**.
-3.  **Re-run**: `python lofi_gate.py`.
+### 🐹 Go
 
-## ⚖️ The Judge Skill (`lofi-gate-judge`)
+[👉 Read docs/setup-go.md](docs/setup-go.md)
+_Auto-runs `go test` and `go vet`._
 
-If available in `.agent/skills/lofi-gate-judge`, you MUST run it after your tests pass but BEFORE you declare the task done.
+## 3. Verify
 
-It verifies:
+Run the gate manually to prove it works:
 
-1.  Did you modify tests? (Anti-Cheat)
-2.  Did you fulfill the prompt? (Intent)
+```bash
+python lofi_gate.py
+```

@@ -90,3 +90,15 @@ Required action: [what to fix]
 
 - **If APPROVED**: You may proceed to commit/push.
 - **If REJECTED**: You MUST fix the issues before proceeding. Do not ignore this judgment.
+
+## Step 7: Log Your Verdict
+
+Record your decision in the official log:
+
+```bash
+# If Passed
+python .agent/skills/lofi-gate-judge/scripts/logger.py --source "JUDGE" --status "PASS" --message "Approved changes."
+
+# If Failed
+python .agent/skills/lofi-gate-judge/scripts/logger.py --source "JUDGE" --status "FAIL" --message "Reason for rejection..."
+```

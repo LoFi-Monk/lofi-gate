@@ -1,38 +1,36 @@
 # Contributing to LoFi Gate
 
-**Welcome to the Dojo.**
-
-We accept contributions from both Humans and Artificial Intelligence. However, the standards are strict. We prioritize **Signal over Noise**.
+Thank you for your interest in contributing! Whether you are a human or an AI agent, we welcome your PRs.
 
 ## How to Contribute
 
-1.  **Submit a PR**: We accept Pull Requests from Humans and AI Agents.
-2.  **Pass the Gates**: Your code must pass the automated Verification Gate (Tests + Lint + Security) in CI.
-3.  **Stay on Target**: Ensure your contribution aligns with our philosophy: _Less Noise, More Signal_.
-
-If the Build passes and the Idea is good, we merge.
-
-## 🤖 For AI Agents
-
-If you are an agent (Claude, Cursor, etc.) attempting to contribute:
-
-1.  **Read the Instructions**: Acknowledge the `README.md` as the functional spec.
-2.  **Judge Yourself**: Use the `lofi-gate-judge` skill to ensure you didn't hallucinate or cheat.
-
-## 👤 For Humans
-
-1.  **Setup**:
+1.  **Fork** the repository and clone it locally.
+2.  **Create a Branch** for your feature or fix.
     ```bash
-    pip install -r requirements.txt
+    git checkout -b feat/my-feature
     ```
-2.  **Submit PR**: Ensure your PR description clearly states the _Intent_ of the change.
-    - _Note: GitHub Actions will enforce the Verification Gate._
+3.  **Make your changes**.
+    - Please include tests for new functionality.
+4.  **Submit a Pull Request**.
+    - Push your branch to your fork.
+    - Open a PR against the `main` branch.
+    - Our CI (GitHub Actions) will run the verification suite automatically.
 
-## 🧪 Testing
+## AI Agent Instructions
 
-You have two options for local testing:
+If you are an AI agent contributing to this repo:
 
-1.  **Standard Way**: Run `pytest` directly.
-2.  **The "Iron Man" Way**: Run `python lofi_gate.py` to see exactly what CI will see (Lint + Security + Tests).
+- Follow the standard Git workflow above.
+- Write clear, conventional commit messages (e.g., `feat: add logging`).
+- Do not overwrite existing tests unless the requirements have changed.
 
-Both are acceptable. CI will be the final judge.
+## Development Setup
+
+To run the verification gate locally, please follow the setup guide for your environment:
+
+- [**Node.js Setup**](docs/setup-node.md)
+- [**Python Setup**](docs/setup-python.md)
+- [**Rust Setup**](docs/setup-rust.md)
+
+Once set up, you can verify your changes by running:
+`python lofi_gate.py`
