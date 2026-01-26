@@ -4,16 +4,17 @@
 
 ### The Problem
 
-AI Agents struggle to debug massive terminal output. Feeding an Agent 10,000 lines of CI logs ensures it misses the root cause and burns through your API budget.
+AI Agents struggle to debug massive terminal output. A single Jest failure can produce **15,000 tokens of noise**.
+Feeding this to an LLM ensures it misses the root cause and burns through your API budget.
 
 ### The Cost
 
 **"Context Overflow."**
-When error logs exceed the context window, Agents hallucinate fixes or get stuck in failure loops. This wastes time and money.
+When error logs exceed the context window, Agents hallucinate fixes or get stuck in failure loops.
 
 ### The Solution
 
-LoFi Gate is a **signal-first** verification proxy. It wraps your existing tools (npm, cargo, pytest), truncates the noise, and delivers a concise, token-optimized failure report that Agents can actually understand.
+LoFi Gate is a **signal-first** verification proxy. It wraps your existing tools (npm, cargo, pytest), truncates the noise, and delivers a concise, token-optimized failure report.
 
 ## The Old Way
 
@@ -25,11 +26,12 @@ LoFi Gate is a **signal-first** verification proxy. It wraps your existing tools
 
 ## Quick Install
 
-Get the tool and scaffold your workspace physics:
+Get to a "working experience" in 30 seconds:
 
 ```bash
 pip install lofi-gate
 lofi-gate init
+lofi-gate verify  # Test it immediately
 ```
 
 _This creates `.agent/skills/lofi-gate/` with your local config._
