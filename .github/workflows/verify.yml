@@ -24,6 +24,6 @@ jobs:
       - name: Run LoFi Gate
         # Eating our own dogfood via the Speed Lane script
         run: |
-          pip install .
+          pip install .[dev]
           lofi-gate init
           lofi-gate verify --parallel
