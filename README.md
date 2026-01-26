@@ -20,7 +20,8 @@ A Shepherd:
 
 ### The Reality
 
-A single Jest failure can produce **15,000 tokens of noise**.
+A single Jest failure can produce **15,000 tokens of noise** — that's **85% of Claude's context window** burned on a single test run.
+
 Feeding this to an LLM ensures it misses the root cause and burns through your API budget. "Context Overflow" causes agents to hallucinate fixes or get stuck in failure loops.
 
 ### The Solution
