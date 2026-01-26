@@ -1,33 +1,38 @@
 # Setup: Python
 
-## 1. Install Requirements
+## 1. Install LoFi Gate
 
-Ensure you have Python 3.8+ installed.
+Install the package:
 
-## 2. Copy the Script
-
-Copy `lofi_gate.py` to your project root or `scripts/` folder.
-
-## 3. Configure `pyproject.toml` (if using Poetry/PDM)
-
-You can use `taskipy` or similar tools to map the command.
-
-```toml
-[tool.taskipy.tasks]
-lofi-gate = "python lofi_gate.py --parallel"
-test = "task lofi-gate"
+```bash
+pip install lofi-gate
 ```
 
-## 4. Configure `test:agent`
+## 2. Initialize Physics
 
-LoFi Gate looks for a specific pattern to run optimized tests.
+Scaffold the configuration into your workspace:
 
-If using `pytest`, you can use `pytest-testmon` or similar packages to run only affected tests, or simply default to standard pytest if optimization isn't set up yet.
+```bash
+lofi-gate init
+```
 
-## 5. Verify
+_This creates `.agent/skills/lofi-gate/`._
+
+## 3. Configure Workflow
+
+You can run `lofi-gate verify` directly, or wrap it in a `Makefile` or `pyproject.toml` script (if using `pdm` or `poetry`).
+
+**Example Makefile:**
+
+```makefile
+test:
+    lofi-gate verify --parallel
+```
+
+## 4. Verify
 
 Run the gate manually:
 
 ```bash
-python lofi_gate.py --parallel
+lofi-gate verify
 ```

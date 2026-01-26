@@ -1,35 +1,39 @@
 # Setup: Rust
 
-## 1. Install Requirements
+## 1. Install LoFi Gate
 
-Ensure you have Python 3.8+ installed (for the gate script) and Cargo.
+Install the package (requires Python 3.8+):
 
-## 2. Copy the Script
-
-Copy `lofi_gate.py` to your project root.
-
-## 3. Usage
-
-Since Cargo doesn't have a built-in "scripts" section like npm (without plugins/aliases), you typically run the script directly or use a `Makefile` / `Justfile`.
-
-**Makefile Example:**
-
-```makefile
-verify:
-	python lofi_gate.py --parallel
+```bash
+pip install lofi-gate
 ```
 
-## 4. Automatic Detection
+## 2. Initialize Physics
 
-LoFi Gate automatically detects `Cargo.toml`.
+Scaffold the configuration into your workspace:
 
-- It runs `cargo check` (Security/Lint equivalent)
-- It runs `cargo test`
+```bash
+lofi-gate init
+```
 
-## 5. Verify
+_This creates `.agent/skills/lofi-gate/`._
+
+## 3. Configure `Cargo.toml` (Optional)
+
+Rust doesn't have a standardized "scripts" section like Node, but you can use `cargo-make` or just run the CLI directly.
+
+**Using cargo-make (Makefile.toml):**
+
+```toml
+[tasks.verify]
+command = "lofi-gate"
+args = ["verify", "--parallel"]
+```
+
+## 4. Verify
 
 Run the gate manually:
 
 ```bash
-python lofi_gate.py --parallel
+lofi-gate verify
 ```
