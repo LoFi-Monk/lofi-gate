@@ -12,6 +12,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Set up Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
@@ -19,9 +24,10 @@ jobs:
 
       - name: Install dependencies
         run: |
+          npm ci
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
       - name: Run LoFi Gate
-        # We use our own tool to verify ourselves. Deep recursion.
-        run: python lofi_gate.py --serial
+        # Eating our own dogfood via the Speed Lane script
+        run: npm run lofi-gate
