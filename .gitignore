@@ -18,4 +18,9 @@ Thumbs.db
 
 # IDE
 .vscode/
-.idea/
+# Python Packaging
+build/
+dist/
+*.egg-info/
+.wiki-temp/
+
