@@ -26,7 +26,10 @@ Feeding this to an LLM ensures it misses the root cause and burns through your A
 
 ### The Solution
 
-LoFi Gate is a **signal-first** verification proxy. It wraps your existing tools (npm, cargo, pytest), truncates the noise, and delivers a concise, token-optimized failure report.
+LoFi Gate is a **signal-first** verification proxy. It wraps your existing tools (npm, cargo, pytest), truncates the noise, and delivers a concise, token-optimized failure report that Agents can actually understand.
+
+> [!TIP]
+> **Full Documentation**: [LoFi Gate Wiki](https://github.com/LoFi-Monk/lofi-gate/wiki)
 
 ## The Old Way
 
