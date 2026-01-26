@@ -1,17 +1,22 @@
 # Setup: Node.js
 
-## 1. Install Requirements
+## 1. Install LoFi Gate
 
-Ensure you have Python 3.8+ installed (for the gate script).
-
-## 2. Copy the Script
-
-Copy `lofi_gate.py` to your `scripts/` folder:
+Install the package using Python's package manager:
 
 ```bash
-mkdir -p scripts
-cp lofi_gate.py scripts/
+pip install lofi-gate
 ```
+
+## 2. Initialize Physics
+
+Scaffold the configuration into your workspace:
+
+```bash
+lofi-gate init
+```
+
+_This creates `.agent/skills/lofi-gate/`._
 
 ## 3. Configure `package.json`
 
@@ -20,7 +25,7 @@ Add the following scripts to your `package.json`:
 ```json
 {
   "scripts": {
-    "lofi-gate": "python scripts/lofi_gate.py --parallel",
+    "lofi-gate": "lofi-gate verify --parallel",
     "test": "npm run lofi-gate",
     "test:agent": "jest --onlyChanged",
     "lint": "eslint ."

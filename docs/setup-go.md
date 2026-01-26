@@ -1,42 +1,38 @@
-# Setup LoFi Gate for Go 🐹
+# Setup: Go
 
-## 1. Prerequisites
+## 1. Install LoFi Gate
 
-Ensure strict TDD compliance in your Go project.
-
-```bash
-# Verify you have Go installed
-go version
-```
-
-## 2. Install the Script
-
-Run this in your project root:
+Install the package (requires Python 3.8+):
 
 ```bash
-curl -o lofi_gate.py https://raw.githubusercontent.com/LoFi-Monk/lofi-gate/main/lofi_gate.py
+pip install lofi-gate
 ```
 
-## 3. Git Hook Setup
+## 2. Initialize Physics
 
-Go doesn't have a standardized `package.json` equivalent for scripts, so we rely heavily on Git Hooks (Husky or manual).
-
-### Manual Method
-
-Create `.git/hooks/pre-push` (or `pre-commit`):
+Scaffold the configuration into your workspace:
 
 ```bash
-#!/bin/sh
-python3 lofi_gate.py --parallel
+lofi-gate init
 ```
 
-Make it executable:
-`chmod +x .git/hooks/pre-push`
+_This creates `.agent/skills/lofi-gate/`._
 
-## 4. Usage
+## 3. Configure Workflow
 
-The script automatically detects `go.mod` and runs:
+Go developers typically use a `Makefile`.
 
-- **Lint**: `go vet ./...`
-- **Tests**: `go test ./...`
-- **TDD Check**: Scans for new `*.go` files without `*_test.go`.
+**Makefile:**
+
+```makefile
+verify:
+    lofi-gate verify --parallel
+```
+
+## 4. Verify
+
+Run the gate manually:
+
+```bash
+lofi-gate verify
+```

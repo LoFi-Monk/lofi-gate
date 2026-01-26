@@ -1,36 +1,53 @@
 # Contributing to LoFi Gate
 
-Thank you for your interest in contributing! Whether you are a human or an AI agent, we welcome your PRs.
+**Physics over Law.**
 
-## How to Contribute
+We do not have a 50-page rulebook. We have a **Gate**.
+If you want to contribute, your code must pass the Gate.
 
-1.  **Fork** the repository and clone it locally.
-2.  **Create a Branch** for your feature or fix.
+## 1. The Physics (Rules)
+
+### Red-Green-Refactor
+
+This repository (and the Judge skill) enforces **Strict TDD**.
+
+- **Red**: Write a test that fails.
+- **Green**: Write code to pass the test.
+- **Refactor**: Clean it up.
+
+> 🚨 **Breaking the Physics**: If you submit a PR with new source code but NO new tests, the underlying `strict_tdd` check will fail.
+
+## 2. Development Setup
+
+This is a Python package. Treat it like one.
+
+1.  **Clone & Install**
+
     ```bash
-    git checkout -b feat/my-feature
+    git clone https://github.com/LoFi-Monk/lofi-gate.git
+    cd lofi-gate
+    pip install -e .
     ```
-3.  **Make your changes**.
-    - Please include tests for new functionality.
-4.  **Submit a Pull Request**.
-    - Push your branch to your fork.
-    - Open a PR against the `main` branch.
-    - Our CI (GitHub Actions) will run the verification suite automatically.
 
-## AI Agent Instructions
+2.  **Dogfooding (Init)**
+    We use LoFi Gate to verify LoFi Gate. Initialize the physics in the repo root:
 
-If you are an AI agent contributing to this repo:
+    ```bash
+    lofi-gate init
+    ```
 
-- Follow the standard Git workflow above.
-- Write clear, conventional commit messages (e.g., `feat: add logging`).
-- Do not overwrite existing tests unless the requirements have changed.
+3.  **Run Verification**
+    ```bash
+    lofi-gate verify
+    ```
+    _This runs our tests, lint, and security checks._
 
-## Development Setup
+## 3. Pull Requests
 
-To run the verification gate locally, please follow the setup guide for your environment:
+- **Humans**: Open a PR. If the CI (GitHub Actions) passes, we will review it.
+- **Agents**: Ensure you have run `lofi-gate verify` locally before pushing. If the Ledger shows **FAIL**, do not push.
 
-- [**Node.js Setup**](docs/setup-node.md)
-- [**Python Setup**](docs/setup-python.md)
-- [**Rust Setup**](docs/setup-rust.md)
+## 4. Documentation
 
-Once set up, you can verify your changes by running:
-`python lofi_gate.py`
+- **Philosophy**: See [docs/Philosophy.md](docs/Philosophy.md).
+- **Wiki**: See [docs/](docs/) for deep dives.
