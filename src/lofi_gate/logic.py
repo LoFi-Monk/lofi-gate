@@ -114,7 +114,7 @@ def determine_test_command(scripts):
         return "cargo test"
     if os.path.exists("go.mod"):
         return "go test ./..."
-    return "npx jest"
+    return None
 
 def run_checks(parallel=False):
     """
@@ -143,7 +143,10 @@ def run_checks(parallel=False):
 
     # 4. Tests
     test_cmd = determine_test_command(scripts)
-    tasks.append(("Test Suite", lambda: run_command(test_cmd, "Tests")))
+    if test_cmd:
+        tasks.append(("Test Suite", lambda: run_command(test_cmd, "Tests")))
+    else:
+        print("⚠️  No test framework detected. Skipping Test Suite.")
 
     # 5. Coverage
     if "coverage" in scripts:
