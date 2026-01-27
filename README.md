@@ -20,7 +20,7 @@ A Shepherd:
 
 ### The Reality
 
-A single Jest failure can produce **15,000 tokens of noise** — that's **85% of Claude's context window** burned on a single test run.
+A single Jest failure can produce 15,000 tokens of noise.
 
 Feeding this to an LLM ensures it misses the root cause and burns through your API budget. "Context Overflow" causes agents to hallucinate fixes or get stuck in failure loops.
 
@@ -33,11 +33,11 @@ LoFi Gate is a **signal-first** verification proxy. It wraps your existing tools
 
 ## The Old Way
 
-![The Old Way](docs/images/testing-old-way.gif)
+![The Old Way](assets/images/testing-old-way.gif)
 
 ## The New Way
 
-![The New Way](docs/images/testing-lofi-way.gif)
+![The New Way](assets/images/testing-lofi-way.gif)
 
 ## Quick Install
 
