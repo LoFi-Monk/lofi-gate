@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "lofi-gate"
-version = "0.1.0"
+version = "0.1.1"
 description = "Signal-first verification for AI coding agents."
 readme = "README.md"
 authors = [{ name = "LoFi Monk", email = "lofi@example.com" }]
