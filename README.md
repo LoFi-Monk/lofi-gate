@@ -73,7 +73,7 @@ LoFi Gate works out of the box, but you can customize it:
 Optional, but recommended:
 
 - [**Skill: The Checkpoint**](https://github.com/LoFi-Monk/lofi-gate/wiki/Skill-Checkpoint) (Optional) - Helps prevent Agents from "faking" passing tests.
-- [**GitHub Repo Rules**](https://github.com/LoFi-Monk/lofi-gate/wiki/GitHub-Rules) (Branch Protection)
+- [👉 **Read the GitHub Rules Guide**](docs/GitHub-Rules.md)
 
 ### 4. Read The Docs
 
