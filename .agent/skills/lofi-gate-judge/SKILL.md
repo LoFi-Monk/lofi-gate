@@ -1,6 +1,6 @@
 ---
 name: lofi-gate-judge
-description: A self-reflexive verification skill that ensures agent compliance with LoFi Gate rules (Anti-Cheat, Intent Check).
+description: A "Physics-based" verification gate that ensures code quality and TDD compliance.
 ---
 
 # LoFi Gate Judge Skill
