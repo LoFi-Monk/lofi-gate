@@ -100,6 +100,6 @@ To take it a step further, I set up a GitHub Action to run the 'lofi-gate verify
 
 This simple change made it much easier to prototype and test new ideas.
 
-Not trying to sell it but this has been a game changer for me and I'm sure it will be for you too. Thought I'd share it with the community.
+Not trying to sell it but this has been a game changer for me.
 
 **Try it out.** It's easy to set up. I'm having a great experience with it, and I'm sure you will too. Let me know what you think.
