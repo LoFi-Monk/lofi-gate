@@ -49,23 +49,6 @@ Run the gate to verify your changes. This will run your tests, lint, and securit
 lofi-gate verify
 ```
 
-## The Judge (Anti-Cheat)
-
-When an Agent submits code, LoFi Gate performs a **Physical Interrogation**:
-
-> **Q1: Did you modify any EXISTING test files?**
-> _If YES → FAILS immediately._
->
-> **Q2: Did you disable, skip, or weaken any tests?**
-> _If YES → FAILS immediately (Nice try, `expect(true).toBe(true)`)._
->
-> **Q3: Did you delete test files?**
-> _If YES → FAILS immediately._
-
-**The Gate only opens when the interrogation passes.**
-
----
-
 ## Wire It Up
 
 LoFi Gate is designed to be the "Hardware Interface" between your AI Agent and your project.
@@ -81,20 +64,19 @@ Detailed setup guides for specific environments:
 
 ### 2. Configure Your Agent
 
-If you are using a "Skill-based" agent (Claude, Qwen, etc), point it to the scaffolded skill file:
+LoFi Gate works out of the box, but you can customize it:
 
-- [**Skill: The Judge**](https://github.com/LoFi-Monk/lofi-gate/wiki/Skill-Judge) (Rules)
-- [**Configuration**](https://github.com/LoFi-Monk/lofi-gate/wiki/Configuration) (`lofi.toml`)
+- [**Configuration**](https://github.com/LoFi-Monk/lofi-gate/wiki/Configuration) (`lofi.toml`) - Toggle security checks, custom test commands, and more.
 
-### 3. Enforce The Rules
+### 3. Optional: Enforce The Rules
 
-Don't let broken code merge.
+Optional, but recommended:
 
+- [**Skill: The Checkpoint**](https://github.com/LoFi-Monk/lofi-gate/wiki/Skill-Checkpoint) (Optional) - Helps prevent Agents from "faking" passing tests.
 - [**GitHub Repo Rules**](https://github.com/LoFi-Monk/lofi-gate/wiki/GitHub-Rules) (Branch Protection)
 
 ### 4. Read The Docs
 
-- [**Philosophy**](https://github.com/LoFi-Monk/lofi-gate/wiki/Philosophy): Why "Physics over Law"?
 - [**Compatibility**](https://github.com/LoFi-Monk/lofi-gate/wiki/compatibility): Using LoFi Gate with Local Models.
 
 * [**Logging & The Ledger**](https://github.com/LoFi-Monk/lofi-gate/wiki/Ledger): Understanding the `verification_history.md` format and Token Savings.
@@ -107,3 +89,7 @@ Every time LoFi Gate runs, it calculates **Token Savings**.
 Check `verification_history.md` to see exactly how much context (and money) you are saving per run.
 
 > 📊 **Total Token Size:** 14502 | 💰 **Total Token Savings:** 12400
+
+_Note: Token counts are holistic estimates based on typical 4-char/token heuristics._
+
+I wanted to see how much "noise" I was sending to my LLM, for every test. I thought this was a helpful estimate to go by.
