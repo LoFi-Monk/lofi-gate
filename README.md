@@ -21,11 +21,11 @@ LoFi Gate is a **signal-first** verification proxy. It wraps your existing tools
 
 ## The Old Way
 
-![The Old Way](assets/images/testing-old-way.gif)
+![The Old Way](https://github.com/LoFi-Monk/lofi-gate/raw/main/assets/images/testing-old-way.gif)
 
 ## The New Way
 
-![The New Way](assets/images/testing-lofi-way.gif)
+![The New Way](https://github.com/LoFi-Monk/lofi-gate/raw/main/assets/images/testing-lofi-way.gif)
 
 In extreme cases (complex failures, verbose frameworks), we've measured single test failures producing 15,000+ tokens.
 
