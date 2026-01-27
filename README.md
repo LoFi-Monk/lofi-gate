@@ -94,10 +94,12 @@ Then I came across this [Spotify R&D blog post](https://engineering.atspotify.co
 It led me to create this tool.
 **Testing became faster and reliable.** When Claude hit a wall without tests to verify the code, it was forced to write them. The **Checkpoint Skill** ensured verification wasn't skipped. I could finally focus on the actual problem instead of babysitting the AI's integrity.
 
-Stripping out the noise in the tests also made the model more reliable and hallucinations less likely.
+This tool does not replace your existing tests. Its simply a proxy. Stripping out the noise in the tests which also made the model more reliable and hallucinations less likely.
 
-To take it a step further, I set up a GitHub Action to run the Checkpoint on every push to `main`. This catches any issues the AI might have missed.
+To take it a step further, I set up a GitHub Action to run the 'lofi-gate verify' on every push to `main`. This catches any issues the AI might have missed. If it doesn't have tests and if it doesn't pass the tests it will fail the build.
 
 This simple change made it much easier to prototype and test new ideas.
+
+Not trying to sell it but this has been a game changer for me and I'm sure it will be for you too. Thought I'd share it with the community.
 
 **Try it out.** It's easy to set up. I'm having a great experience with it, and I'm sure you will too. Let me know what you think.
