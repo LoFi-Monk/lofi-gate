@@ -40,22 +40,25 @@ You must configure GitHub to block merges if `gate.yml` fails.
 Run this command in your terminal:
 
 ```bash
-gh api repos/:owner/:repo/rulesets \
-  -f name="Strict TDD Gate" \
-  -f target="branch" \
-  -f enforcement="active" \
-  -F conditions[ref_name][include][]="refs/heads/main" \
-  -F rules[0][type]="required_status_checks" \
-  -F rules[0][parameters][required_status_checks][][context]="gate" \
-  -F rules[0][parameters][strict_required_status_checks_policy]=true
+gh api -X PUT repos/:owner/:repo/branches/main/protection \
+  -F required_status_checks[strict]=true \
+  -F required_status_checks[contexts][]=gate \
+  -F enforce_admins=true \
+  -F required_pull_request_reviews[dismiss_stale_reviews]=false \
+  -F required_pull_request_reviews[require_code_owner_reviews]=false \
+  -F required_pull_request_reviews[required_approving_review_count]=0 \
+  -F restrictions=null
 ```
 
 ### Option B: Manual Setup
 
 1. Go to **Settings > Rules > Rulesets**.
-2. Click **New branch ruleset**.
-3. Name: `Strict TDD Gate`.
-4. Target: `Includes default branch`.
-5. Check **Require status checks to pass**.
-6. Add `gate`.
-7. Click **Create**.
+2. Click **Add Classic branch protection rule**.
+3. Branch Name Pattern: `main` or `master`.
+4. Require a pull request before merging: `Yes`
+5. Require approvals: `No`
+6. Require status checks to pass before merging: `Yes`
+7. Require branches to be up to date before merging: `Yes`
+8. Status checks to require: `gate`
+9. Do not allow bypassing this rule: `Yes`
+10. Click **Create**.
