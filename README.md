@@ -2,25 +2,13 @@
 
 **Signal-first verification for AI coding agents.**
 
-## Why? The Shepherd of Cats
+## The Problem
 
-AI Agents are like cats: smart, autonomous, but easily distracted. You cannot "command" a cat; you have to structure its environment so the only logical thing to do is what you want.
-
-A Shepherd doesn't:
-
-- Ask sheep nicely to stay together.
-- Write documentation about staying together.
-- Hope they follow the process.
-
-A Shepherd:
-
-- **Uses a fence** (Environment Design).
-- **Uses a dog** (Enforcement Mechanism).
-- **Makes it easier to stay together than to wander off.**
+AI Agents struggle to debug massive terminal output. Feeding an Agent 10,000 lines of CI logs ensures it misses the root cause and burns through your API budget.
 
 ### The Reality
 
-A single Jest failure can produce 15,000 tokens of noise.
+A failed test run can easily produce 5,000-10,000 tokens of noise - stack traces, error messages, and framework output that obscures the actual problem.
 
 Feeding this to an LLM ensures it misses the root cause and burns through your API budget. "Context Overflow" causes agents to hallucinate fixes or get stuck in failure loops.
 
@@ -38,6 +26,8 @@ LoFi Gate is a **signal-first** verification proxy. It wraps your existing tools
 ## The New Way
 
 ![The New Way](assets/images/testing-lofi-way.gif)
+
+In extreme cases (complex failures, verbose frameworks), we've measured single test failures producing 15,000+ tokens.
 
 ## Quick Install
 
