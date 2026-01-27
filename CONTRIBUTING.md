@@ -1,53 +1,27 @@
-# Contributing to LoFi Gate
+# How to Contribute
 
-**Physics over Law.**
+## 1. The Rules (Physics)
 
-We do not have a 50-page rulebook. We have a **Gate**.
-If you want to contribute, your code must pass the Gate.
+This repo is protected by **LoFi Gate**.
 
-## 1. The Physics (Rules)
+- You must write tests.
+- You cannot commit if `lofi-gate verify` fails.
 
-### Red-Green-Refactor
+## 2. Setup
 
-This repository (and the Judge skill) enforces **Strict TDD**.
+1. Fork & Clone.
+2. `pip install -e .`
+3. Hack away.
 
-- **Red**: Write a test that fails.
-- **Green**: Write code to pass the test.
-- **Refactor**: Clean it up.
+## 3. Releasing (For Maintainers)
 
-> 🚨 **Breaking the Physics**: If you submit a PR with new source code but NO new tests, the underlying `strict_tdd` check will fail.
+To publish a new version to PyPI:
 
-## 2. Development Setup
-
-This is a Python package. Treat it like one.
-
-1.  **Clone & Install**
-
-    ```bash
-    git clone https://github.com/LoFi-Monk/lofi-gate.git
-    cd lofi-gate
-    pip install -e .
-    ```
-
-2.  **Dogfooding (Init)**
-    We use LoFi Gate to verify LoFi Gate. Initialize the physics in the repo root:
-
-    ```bash
-    lofi-gate init
-    ```
-
-3.  **Run Verification**
-    ```bash
-    lofi-gate verify
-    ```
-    _This runs our tests, lint, and security checks._
-
-## 3. Pull Requests
-
-- **Humans**: Open a PR. If the CI (GitHub Actions) passes, we will review it.
-- **Agents**: Ensure you have run `lofi-gate verify` locally before pushing. If the Ledger shows **FAIL**, do not push.
-
-## 4. Documentation
-
-- **Philosophy**: See [docs/Philosophy.md](docs/Philosophy.md).
-- **Wiki**: See [docs/](docs/) for deep dives.
+1.  **Bump Version**: Update `version = "x.y.z"` in `pyproject.toml`.
+2.  **Commit**: `git commit -m "chore: bump version to x.y.z"`
+3.  **Release**:
+    - Go to GitHub -> [Releases](https://github.com/LoFi-Monk/lofi-gate/releases).
+    - Draft a new release.
+    - Tag it `vx.y.z`.
+    - Click **Publish**.
+4.  **Watch**: The `Publish to PyPI` Action will verify, build, and upload automatically.
