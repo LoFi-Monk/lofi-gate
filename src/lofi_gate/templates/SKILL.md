@@ -1,9 +1,13 @@
 ---
-name: lofi-gate-judge
-description: A "Physics-based" verification gate that ensures code quality and TDD compliance.
+name: lofi-gate-checkpoint
+description: Tests passing? STOP. REQUIRED before committing. Verifies you didn't cheat and stayed within scope.
 ---
 
 # LoFi Gate Judge Skill
+
+> [!CAUTION]
+> **MANDATORY CHECKPOINT.** You cannot commit until this skill approves your changes.
+> Skipping this step will result in rejection at the Gate.
 
 You have completed coding and tests are passing. Now you must judge your own work before declaring victory.
 
@@ -97,8 +101,8 @@ Record your decision in the official log:
 
 ```bash
 # If Passed
-python .agent/skills/lofi-gate-judge/scripts/logger.py --source "JUDGE" --status "PASS" --message "Approved changes."
+python .agent/skills/lofi-gate-checkpoint/scripts/logger.py --source "CHECKPOINT" --status "PASS" --message "Approved changes."
 
 # If Failed
-python .agent/skills/lofi-gate-judge/scripts/logger.py --source "JUDGE" --status "FAIL" --message "Reason for rejection..."
+python .agent/skills/lofi-gate-checkpoint/scripts/logger.py --source "CHECKPOINT" --status "FAIL" --message "Reason for rejection..."
 ```
