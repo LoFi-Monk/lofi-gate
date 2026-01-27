@@ -83,13 +83,21 @@ Optional, but recommended:
 
 ---
 
-## The Ledger
+## The Origin Story
 
-Every time LoFi Gate runs, it calculates **Token Savings**.
-Check `verification_history.md` to see exactly how much context (and money) you are saving per run.
+So here's the deal:
 
-> 📊 **Total Token Size:** 14502 | 💰 **Total Token Savings:** 12400
+I spent many, many hours pair coding with AI—oscillating between triumph and despair. I went from tinkering to writing full specs, creating tasks, and baking TDD into the instructions... only to have the AI skip or fake the tests.
 
-_Note: Token counts are holistic estimates based on typical 4-char/token heuristics._
+Then I came across this [Spotify R&D blog post](https://engineering.atspotify.com/2025/12/feedback-loops-background-coding-agents-part-3). It’s a great read (highly recommended).
 
-I wanted to see how much "noise" I was sending to my LLM, for every test. I thought this was a helpful estimate to go by.
+It led me to create this tool.
+**Testing became faster and reliable.** When Claude hit a wall without tests to verify the code, it was forced to write them. The **Checkpoint Skill** ensured verification wasn't skipped. I could finally focus on the actual problem instead of babysitting the AI's integrity.
+
+Stripping out the noise in the tests also made the model more reliable and hallucinations less likely.
+
+To take it a step further, I set up a GitHub Action to run the Checkpoint on every push to `main`. This catches any issues the AI might have missed.
+
+This simple change made it much easier to prototype and test new ideas.
+
+**Try it out.** It's easy to set up. I'm having a great experience with it, and I'm sure you will too. Let me know what you think.
