@@ -49,6 +49,21 @@ Run the gate to verify your changes. This will run your tests, lint, and securit
 lofi-gate verify
 ```
 
+## The Judge (Anti-Cheat)
+
+When an Agent submits code, LoFi Gate performs a **Physical Interrogation**:
+
+> **Q1: Did you modify any EXISTING test files?**
+> _If YES → FAILS immediately._
+>
+> **Q2: Did you disable, skip, or weaken any tests?**
+> _If YES → FAILS immediately (Nice try, `expect(true).toBe(true)`)._
+>
+> **Q3: Did you delete test files?**
+> _If YES → FAILS immediately._
+
+**The Gate only opens when the interrogation passes.**
+
 ---
 
 ## Wire It Up
@@ -59,30 +74,30 @@ LoFi Gate is designed to be the "Hardware Interface" between your AI Agent and y
 
 Detailed setup guides for specific environments:
 
-- [**Node.js**](docs/Setup-Node.md) (`package.json`)
-- [**Python**](docs/Setup-Python.md) (`pyproject.toml`)
-- [**Rust**](docs/Setup-Rust.md) (`Cargo.toml`)
-- [**Go**](docs/Setup-Go.md) (`go.mod`)
+- [**Node.js**](https://github.com/LoFi-Monk/lofi-gate/wiki/Setup-Node) (`package.json`)
+- [**Python**](https://github.com/LoFi-Monk/lofi-gate/wiki/Setup-Python) (`pyproject.toml`)
+- [**Rust**](https://github.com/LoFi-Monk/lofi-gate/wiki/Setup-Rust) (`Cargo.toml`)
+- [**Go**](https://github.com/LoFi-Monk/lofi-gate/wiki/Setup-Go) (`go.mod`)
 
 ### 2. Configure Your Agent
 
 If you are using a "Skill-based" agent (Claude, Qwen, etc), point it to the scaffolded skill file:
 
-- [**Skill: The Judge**](docs/Skill-Judge.md) (Rules)
-- [**Configuration**](docs/Configuration.md) (`lofi.toml`)
+- [**Skill: The Judge**](https://github.com/LoFi-Monk/lofi-gate/wiki/Skill-Judge) (Rules)
+- [**Configuration**](https://github.com/LoFi-Monk/lofi-gate/wiki/Configuration) (`lofi.toml`)
 
 ### 3. Enforce The Rules
 
 Don't let broken code merge.
 
-- [**GitHub Repo Rules**](docs/GitHub-Rules.md) (Branch Protection)
+- [**GitHub Repo Rules**](https://github.com/LoFi-Monk/lofi-gate/wiki/GitHub-Rules) (Branch Protection)
 
 ### 4. Read The Docs
 
-- [**Philosophy**](docs/Philosophy.md): Why "Physics over Law"?
-- [**Compatibility**](docs/compatibility.md): Using LoFi Gate with Local Models.
+- [**Philosophy**](https://github.com/LoFi-Monk/lofi-gate/wiki/Philosophy): Why "Physics over Law"?
+- [**Compatibility**](https://github.com/LoFi-Monk/lofi-gate/wiki/compatibility): Using LoFi Gate with Local Models.
 
-* [**Logging & The Ledger**](docs/Ledger.md): Understanding the `verification_history.md` format and Token Savings.
+* [**Logging & The Ledger**](https://github.com/LoFi-Monk/lofi-gate/wiki/Ledger): Understanding the `verification_history.md` format and Token Savings.
 
 ---
 
