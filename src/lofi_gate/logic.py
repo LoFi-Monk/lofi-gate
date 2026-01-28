@@ -4,6 +4,7 @@ import os
 import json
 import concurrent.futures
 import time
+import toml
 from .logger import log_to_history
 
 # --- Helper Functions ---
@@ -105,7 +106,21 @@ def load_scripts():
             return {}
     return {}
 
-def determine_test_command(scripts):
+def load_config():
+    """
+    Loads configuration from lofi.toml if it exists.
+    Returns a dictionary.
+    """
+    try:
+        if os.path.exists("lofi.toml"):
+            with open("lofi.toml", "r") as f:
+                return toml.load(f)
+    except Exception as e:
+        print(f"⚠️  Failed to load lofi.toml: {e}")
+    return {}
+
+def determine_test_command(scripts, config_test_cmd=None):
+    if config_test_cmd: return config_test_cmd
     if "test:agent" in scripts: return "npm run test:agent"
     if "test" in scripts and "verify" not in scripts["test"]: return "npm test"
     if os.path.exists("pyproject.toml") or os.path.exists("requirements.txt") or os.path.isdir("tests"): 
@@ -124,25 +139,52 @@ def run_checks(parallel=False):
     scripts = load_scripts()
     tasks = []
 
+    config = load_config()
+    gate_config = config.get("gate", {})
+    
+    # Defaults
+    # We default `security_check` to True because we want to be secure by default.
+    do_security = gate_config.get("security_check", True)
+    
+    # We default `security_fail_on_error` to True. 
+    # Rationale: If a security vulnerability is found, it should block deployment.
+    # However, for legacy projects or verified agent workflows (like Issue-24), 
+    # users might need to downgrade this to a warning (exit code 0).
+    security_fail_on_error = gate_config.get("security_fail_on_error", True)
+    
+    do_lint = gate_config.get("lint_check", True)
+    
     # 1. TDD Check
-    tasks.append(("TDD Check", lambda: check_strict_tdd()))
+    if gate_config.get("strict_tdd", True):
+        tasks.append(("TDD Check", lambda: check_strict_tdd()))
 
     # 2. Security
-    if os.path.exists("package.json"):
-        tasks.append(("Security Scan", lambda: run_command("npm audit --audit-level=high", "Security")))
-    elif os.path.exists("Cargo.toml"):
-        tasks.append(("Security Scan", lambda: run_command("cargo audit", "Security")))
+    def run_security(cmd):
+        exit_code, output, duration, command = run_command(cmd, "Security")
+        # If the user has opted out of "hard blocks" for security (e.g. strict peer deps),
+        # we still run the check to show the output (visibility), 
+        # but we suppress the non-zero exit code so the pipeline continues.
+        if not security_fail_on_error and exit_code != 0:
+             return 0, f"⚠️  Security Check Failed (Warn Only) - Exit Code {exit_code}\n" + output, duration, command
+        return exit_code, output, duration, command
+
+    if do_security:
+        if os.path.exists("package.json"):
+            tasks.append(("Security Scan", lambda: run_security("npm audit --audit-level=high")))
+        elif os.path.exists("Cargo.toml"):
+            tasks.append(("Security Scan", lambda: run_security("cargo audit")))
 
     # 3. Lint
-    if "lint" in scripts:
-        tasks.append(("Lint", lambda: run_command("npm run lint", "Lint")))
-    elif os.path.exists("Cargo.toml"):
-         tasks.append(("Lint", lambda: run_command("cargo check", "Lint")))
-    elif os.path.exists("go.mod"):
-        tasks.append(("Lint", lambda: run_command("go vet ./...", "Lint")))
+    if do_lint:
+        if "lint" in scripts:
+            tasks.append(("Lint", lambda: run_command("npm run lint", "Lint")))
+        elif os.path.exists("Cargo.toml"):
+            tasks.append(("Lint", lambda: run_command("cargo check", "Lint")))
+        elif os.path.exists("go.mod"):
+            tasks.append(("Lint", lambda: run_command("go vet ./...", "Lint")))
 
     # 4. Tests
-    test_cmd = determine_test_command(scripts)
+    test_cmd = determine_test_command(scripts, config.get("project", {}).get("test_command"))
     if test_cmd:
         tasks.append(("Test Suite", lambda: run_command(test_cmd, "Tests")))
     else:

@@ -13,4 +13,10 @@ strict_tdd = true
 lint_check = true
 
 # Fail if security vulnerabilities are found?
+# Fail if security vulnerabilities are found?
 security_check = true
+
+# If true, security failures (npm audit, cargo audit) will break the build.
+# If false, they will be reported but won't fail the verification (exit code 0).
+# Useful for "warn-only" checks.
+security_fail_on_error = true

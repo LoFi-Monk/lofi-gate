@@ -52,3 +52,18 @@ Run the gate manually:
 ```bash
 npm run lofi-gate
 ```
+
+## 6. Troubleshooting
+
+### `npm audit` Failures
+
+If you are using Next.js 16 with Storybook 8 (or other conflicting peer dependencies), `npm audit` might fail even if there are no critical vulnerabilities, due to `ERESOLVE` errors.
+
+To fix this unrelated blocking error, update `.agent/skills/lofi-gate/lofi.toml`:
+
+```toml
+[gate]
+security_fail_on_error = false
+```
+
+This will run the audit and show warnings, but won't block your verification.
