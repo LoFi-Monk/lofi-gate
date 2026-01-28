@@ -14,6 +14,7 @@ test_command = ""  # Override auto-detection
 strict_tdd = true     # Block code without tests
 lint_check = true     # Run linter
 security_check = true # Run audit
+security_fail_on_error = true # Fail on security issues
 ```
 
 ## `[project]` Settings
@@ -53,3 +54,12 @@ These are the "Physics" toggles.
 - **Default**: `true`
 - **Description**: Enforces Supply Chain Security.
 - **Behavior**: Runs `npm audit` (High/Critical only) or `cargo audit`. Failure blocks the build.
+
+### `security_fail_on_error`
+
+- **Default**: `true`
+- **Description**: Determines if a security failure should break the verification process.
+- **Behavior**:
+  - **`true` (Strict)**: If `security_check` finds vulnerabilities, the process exits with status code `1` (FAIL).
+  - **`false` (Warn Only)**: Vulnerabilities are printed to the console for visibility, but the process exits with status code `0` (PASS), provided other checks passed.
+- **Use Case**: Useful for legacy projects or when dealing with unresolvable peer dependency conflicts (e.g., Next.js 16 vs Storybook 8) where you want to proceed with verification despite the audit failure.
