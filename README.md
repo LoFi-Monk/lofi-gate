@@ -19,6 +19,13 @@ LoFi Gate is a **signal-first** verification proxy. It wraps your existing tools
 > [!TIP]
 > **Full Documentation**: [LoFi Gate Wiki](https://github.com/LoFi-Monk/lofi-gate/wiki)
 
+## 🤖 AI Context (Optional)
+
+This project is **[Context 7](https://context7.com/) Optimized**. If you are an AI coding agent, you can find high-fidelity, token-optimized documentation at:
+
+- **Context 7 ID**: `/lofi-monk/lofi-gate`
+- **MCP**: Use the `get-library-docs` tool with our ID.
+
 ## The Old Way
 
 ![The Old Way](https://github.com/LoFi-Monk/lofi-gate/raw/main/assets/images/testing-old-way.gif)
