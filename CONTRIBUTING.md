@@ -17,7 +17,8 @@ This repo is protected by **LoFi Gate**.
 
 1.  **Create**: Run `gh pr create` (or open on GitHub).
 2.  **Template**: You **MUST** use the provided PR Template.
-3.  **Proof**: You **MUST** include a screenshot in the "Proof" section. Text descriptions are not accepted.
+3.  **Summary**: The **Summary** section is the most important. Explain clearly what the change is and the reasoning behind it.
+4.  **Proof**: You **MUST** include a screenshot in the "Proof" section. Text descriptions are not accepted.
 
 ## 4. Releasing (For Maintainers)
 

@@ -24,3 +24,5 @@ dist/
 *.egg-info/
 .wiki-temp/
 
+# lofi-gate logs
+verification_history.md
