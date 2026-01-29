@@ -1,0 +1,18 @@
+{
+  "$schema": "https://context7.com/schema/context7.json",
+  "projectTitle": "LoFi Gate",
+  "description": "Prevent agent hallucination by structuring your test outputs. Turns chaotic stdout into a strict, unmissable interface for LLMs.",
+  "branch": "main",
+  "folders": [],
+  "excludeFolders": [
+    ".agent",
+    ".github",
+    "src/lofi_gate.egg-info",
+    "tests",
+    "__pycache__"
+  ],
+  "excludeFiles": [],
+  "rules": [
+    "Run `lofi-gate verify` before committing code, or integrate it into your testing suite."
+  ]
+}
