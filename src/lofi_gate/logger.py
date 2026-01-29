@@ -64,11 +64,13 @@ def log_to_history(label, status, message, tokens_used=0, tokens_saved=0, durati
 
         lines, current_size, current_savings = parse_footer(lines)
         
-        SAFE_LOG_LINES = MAX_LOG_LINES * 2
-        if len(lines) > SAFE_LOG_LINES:
-            lines = lines[-SAFE_LOG_LINES:]
+        # 1. TRUNCATION: Ensure the OLD history doesn't bloat.
+        # We truncate the history BEFORE adding the new entry.
+        # This ensures we always have room for the latest result without losing it immediately.
+        if len(lines) > MAX_LOG_LINES:
+            lines = lines[-MAX_LOG_LINES:]
             if not lines[0].startswith("\n..."):
-                 lines.insert(0, f"\n... (Log truncated to last {SAFE_LOG_LINES} lines) ...\n")
+                 lines.insert(0, f"\n... (History truncated to last {MAX_LOG_LINES} lines to preserve performance) ...\n")
 
         current_size += tokens_used
         current_savings += tokens_saved
@@ -87,8 +89,24 @@ def log_to_history(label, status, message, tokens_used=0, tokens_saved=0, durati
             lines.append("  <details>\n")
             lines.append("  <summary>🔍 View Truncated Error</summary>\n\n")
             lines.append("  ```text\n")
-            for line in error_content.splitlines():
-                lines.append(f"  {line}\n")
+            
+            # CAPPING ERROR CONTENT:
+            # We preserve a significant portion of the error (up to 400 lines) 
+            # to allow humans to see what was truncated from the Agent's view.
+            # However, we still cap it to prevent a single massive failure from creating a 10MB log file.
+            ERROR_LIMIT = 400
+            error_lines = error_content.splitlines()
+            if len(error_lines) > ERROR_LIMIT:
+                head = error_lines[:200]
+                tail = error_lines[-200:]
+                for line in head:
+                    lines.append(f"  {line}\n")
+                lines.append(f"  ... [Truncated {len(error_lines) - ERROR_LIMIT} lines in log] ...\n")
+                for line in tail:
+                    lines.append(f"  {line}\n")
+            else:
+                for line in error_lines:
+                    lines.append(f"  {line}\n")
             lines.append("  ```\n")
             lines.append("  </details>\n")
 

@@ -70,7 +70,9 @@ def print_result(label, exit_code, output, duration, command_context=""):
         print(f"❌ {label} Failed ({duration:.2f}s). Showing relevant error output:")
         print("-" * 40)
         print(truncated_output)
-        log_to_history(label, "FAIL", "Failed", raw_tokens, tokens_truncated, duration, command_context, error_content=truncated_output)
+        # We pass the FULL output to the logger to preserve history for humans, 
+        # while the Agent only saw the truncated version in its context.
+        log_to_history(label, "FAIL", "Failed", raw_tokens, tokens_truncated, duration, command_context, error_content=output)
             
     return exit_code, tokens_truncated
 
