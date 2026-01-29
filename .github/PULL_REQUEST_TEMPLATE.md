@@ -16,4 +16,4 @@
 
 ## 📸 Proof (Optional)
 
-_Paste a screenshot of your `verification_history.md` output or console success message here._
+_**Must be an image.** Paste a screenshot of your `verification_history.md` output or console success message here. Do not write text descriptions._
