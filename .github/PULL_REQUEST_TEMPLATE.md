@@ -1,3 +1,7 @@
+## 📝 Summary
+
+_Explain **what** this PR does and **why** it's needed. High-level signal for the reviewer._
+
 ## 🚪 The Gate
 
 - [ ] **I have run `lofi-gate verify` locally.**
@@ -14,6 +18,6 @@
 - [ ] I have updated the documentation (if applicable).
 - [ ] I have added/updated tests.
 
-## 📸 Proof (Optional)
+## 📸 Proof
 
 _**Must be an image.** Paste a screenshot of your `verification_history.md` output or console success message here. Do not write text descriptions._
