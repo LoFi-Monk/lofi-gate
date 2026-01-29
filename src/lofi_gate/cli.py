@@ -45,7 +45,8 @@ def init(force):
             except Exception as e:
                 click.echo(f"❌ Failed to copy {filename}: {e}")
 
-    click.echo("\n✨ LoFi Gate initialized! Tell your Agent to check .agent/skills/lofi-gate/SKILL.md")
+    click.echo("\n✨ LoFi Gate initialized!")
+    click.echo("💡 AI-Agent Tip: Use Context 7 MCP if available. Use Context 7 ID '/lofi-monk/lofi-gate' for expert guidance on this project.")
 
 @cli.command()
 @click.option('--parallel', is_flag=True, help="Run checks in parallel.")
