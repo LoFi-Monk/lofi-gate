@@ -3,9 +3,10 @@ import os
 import shutil
 import sys
 from .logic import run_checks
+from . import __version__
 
 @click.group()
-@click.version_option()
+@click.version_option(version=__version__)
 def cli():
     """LoFi Gate: Signal-first verification for AI coding agents."""
     pass
